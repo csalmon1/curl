@@ -106,7 +106,7 @@ commands:
   build:
     steps:
       - run: make V=1
-      - run: make V=1 examples
+#      - run: make V=1 examples
 
   test:
     steps:
@@ -124,7 +124,7 @@ jobs:
       - checkout
       - configure
       - build
-      - test
+#      - test
 
   no-verbose:
     executor: ubuntu
@@ -197,30 +197,30 @@ workflows:
     jobs:
       - basic
 
-  openssl-c-ares:
-    jobs:
-      - cares
+#  openssl-c-ares:
+#    jobs:
+#      - cares
 
-  openssl-libssh:
-    jobs:
-      - libssh
+#  openssl-libssh:
+#    jobs:
+#      - libssh
 
-  openssl-no-proxy:
-    jobs:
-      - no-proxy
+#  openssl-no-proxy:
+#    jobs:
+#      - no-proxy
 
-  openssl-no-verbose:
-    jobs:
-      - no-verbose
+#  openssl-no-verbose:
+#    jobs:
+#      - no-verbose
 
-  wolfssl-wolfssh:
-    jobs:
-      - wolfssh
+#  wolfssl-wolfssh:
+#    jobs:
+#      - wolfssh
 
-  arm-openssl:
-    jobs:
-      - arm
+#  arm-openssl:
+#    jobs:
+#      - arm
 
-  arm-openssl-c-ares:
-    jobs:
-      - arm-cares
+#  arm-openssl-c-ares:
+#    jobs:
+#      - arm-cares
