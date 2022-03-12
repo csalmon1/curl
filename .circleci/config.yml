@@ -106,7 +106,7 @@ commands:
   build:
     steps:
       - run: make
-      - run: make install
+      - run: sudo make install
 #      - run: make V=1
 #      - run: make V=1 examples
 
