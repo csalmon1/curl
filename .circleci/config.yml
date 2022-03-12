@@ -31,7 +31,7 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --enable-warnings --enable-werror --with-openssl
+            ./configure --enable-warnings --enable-werror --with-openssl --prefix=/build
   configure-openssl-no-verbose:
     steps:
       - run:
@@ -105,8 +105,13 @@ commands:
             ./configure --enable-debug --enable-werror --with-openssl --enable-ares
   build:
     steps:
-      - run: make V=1
+      - run: make
+      - run: make install
+#      - run: make V=1
 #      - run: make V=1 examples
+
+      - store_artifacts:
+          path: /build 
 
   test:
     steps:
