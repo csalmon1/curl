@@ -107,7 +107,7 @@ commands:
     steps:
       - run: make
       - run: sudo make install
-      - run: tar -zcvf artifacts.tar.gz /build 
+      - run: tar -zcvf artifacts.tar.gz /build/*
 #      - run: make V=1
 #      - run: make V=1 examples
 
