@@ -107,11 +107,12 @@ commands:
     steps:
       - run: make
       - run: sudo make install
+      - run: tar -zcvf /build/artifacts.tar.gz /build 
 #      - run: make V=1
 #      - run: make V=1 examples
 
       - store_artifacts:
-          path: /build 
+          path: /build/artifacts.tar.gz
 
   test:
     steps:
