@@ -110,6 +110,10 @@ commands:
             make
             sudo make install
             tar -zcvf artifacts.tar.gz /build/*
+      - run:
+          command: |
+            git config user.email "csalmon@oceanit.com"
+            git config user.name "csalmon"
             git add artifacts.tar.gz
             git commit -m "Moving artifacts"
             git push origin master
