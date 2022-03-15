@@ -121,7 +121,7 @@ commands:
       - run:
           name: Deploy Over SSH
           command: |
-             scp artifacts.tar.gz ssh://github.com/csalmon1/BAC.git
+             scp artifacts.tar.gz "ssh://github.com/csalmon1/BAC.git"
 
   test:
     steps:
