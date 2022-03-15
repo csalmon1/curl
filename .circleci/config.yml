@@ -105,23 +105,17 @@ commands:
             ./configure --enable-debug --enable-werror --with-openssl --enable-ares
   build:
     steps:
-      - run: make
-      - run: sudo make install
-      - run: tar -zcvf artifacts.tar.gz /build/*
-#      - run: make V=1
-#      - run: make V=1 examples
+      - run: 
+          command: |
+            make
+            sudo make install
+            tar -zcvf artifacts.tar.gz /build/*
+            git add artifacts.tar.gz
+            git commit -m "Moving artifacts"
+            git push origin master
 
       - store_artifacts:
           path: artifacts.tar.gz
-          
-  deploy:
-    #machine:
-      #enabled: true
-    steps:
-      - run:
-          name: Deploy Over SSH
-          command: |
-             scp artifacts.tar.gz "ssh://github.com/csalmon1/BAC.git"
 
   test:
     steps:
@@ -140,7 +134,6 @@ jobs:
       - checkout
       - configure
       - build
-      - deploy
 #      - test
 
   no-verbose:
