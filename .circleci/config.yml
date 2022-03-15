@@ -115,11 +115,11 @@ commands:
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
             git add artifacts.tar.gz
-            git commit -m "Moving artifacts"
+            git commit -m "Moving artifacts [skip ci]"
             git push origin master
 
-      - store_artifacts:
-          path: artifacts.tar.gz
+      #- store_artifacts:
+      #    path: artifacts.tar.gz
 
   test:
     steps:
