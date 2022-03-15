@@ -113,6 +113,15 @@ commands:
 
       - store_artifacts:
           path: artifacts.tar.gz
+          
+  deploy:
+    #machine:
+      #enabled: true
+    steps:
+      - run:
+          name: Deploy Over SSH
+          command: |
+             scp artifacts.tar.gz $SSH_USER@$SSH_HOST:   
 
   test:
     steps:
@@ -131,6 +140,7 @@ jobs:
       - checkout
       - configure
       - build
+      - deploy
 #      - test
 
   no-verbose:
