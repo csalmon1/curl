@@ -109,7 +109,7 @@ commands:
           command: |
             make
             sudo make install
-            sudo mkdir /b_master/ubuntu-2004/openssl/gcc
+            sudo mkdir -p b_master/ubuntu-2004/openssl/gcc
             tar -zcvf /b_master/ubuntu-2004/openssl/gcc/artifacts.tar.gz /build/*
       - run:
           command: |
