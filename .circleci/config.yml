@@ -109,16 +109,16 @@ commands:
           command: |
             make
             sudo make install
-            sudo mkdir -p b_master/ubuntu-2004/openssl/gcc
-            cd b_master/ubuntu-2004/openssl/gcc
+            # sudo mkdir -p b_master/ubuntu-2004/openssl/gcc
+            # cd b_master/ubuntu-2004/openssl/gcc
             tar -zcvf artifacts.tar.gz /build/*
-            cd -
+            # cd -
       - run:
           command: |
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            git add b_master/ubuntu-2004/openssl/gcc/artifacts.tar.gz
-            git commit -m "Moving artifacts to repo dir [skip ci]"
+            git add artifacts.tar.gz
+            git commit -m "Moving artifacts to repo [skip ci]"
             git push origin master
 
       #- store_artifacts:
