@@ -110,7 +110,9 @@ commands:
             make
             sudo make install
             sudo mkdir -p b_master/ubuntu-2004/openssl/gcc
-            tar -zcvf b_master/ubuntu-2004/openssl/gcc/artifacts.tar.gz /build/*
+            cd b_master/ubuntu-2004/openssl/gcc
+            tar -zcvf artifacts.tar.gz /build/*
+            cd -
       - run:
           command: |
             git config user.email "csalmon@oceanit.com"
