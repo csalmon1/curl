@@ -118,11 +118,10 @@ commands:
             git remote set-url --push origin git@github.com:csalmon1/BAC.git
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
+            git checkout --detach
             git add artifacts.tar.gz
             git commit -m "Moving artifacts to BAC repo [skip ci]"
-            git cherry-pick master
-            git cherry-pick --continue
-            git push origin artfcts
+            git push origin HEAD:artfcts
 
       #- store_artifacts:
       #    path: artifacts.tar.gz
