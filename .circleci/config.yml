@@ -122,7 +122,8 @@ commands:
             rm .git/index
             git clean -fdx
             mv ../artifacts.tar.gz .
-            git commit -a -m "Moving artifacts to BAC repo [skip ci]"
+            git add artifacts.tar.gz
+            git commit -m "Moving artifacts to BAC repo [skip ci]"
             git push origin scripts
 
       #- store_artifacts:
