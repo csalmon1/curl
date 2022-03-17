@@ -120,9 +120,9 @@ commands:
             git symbolic-ref HEAD refs/heads/scripts
             rm .git/index
             git clean -fdx
-            sudo mkdir -p curl/b_master/ubuntu-2004/openssl/gcc
-            mv ../artifacts.tar.gz curl/b_master/ubuntu-2004/openssl/gcc
-            git add curl/b_master/ubuntu-2004/openssl/gcc/artifacts.tar.gz
+            sudo mkdir -p curl/x86/ubuntu/b_master/openssl/gcc
+            sudo mv ../artifacts.tar.gz curl/x86/ubuntu/b_master/openssl/gcc
+            git add curl/x86/ubuntu/b_master/openssl/gcc/artifacts.tar.gz
             git commit -m "Moving artifacts to BAC repo [skip ci]"
             git push origin scripts
 
