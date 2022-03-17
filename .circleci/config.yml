@@ -120,7 +120,8 @@ commands:
             git config user.name "csalmon"
             git add artifacts.tar.gz
             git commit -m "Moving artifacts to BAC repo [skip ci]"
-            git push origin master
+            git cherry-pick master
+            git push origin artfcts
 
       #- store_artifacts:
       #    path: artifacts.tar.gz
