@@ -121,7 +121,7 @@ commands:
             git checkout --detach
             git add artifacts.tar.gz
             git commit -m "Moving artifacts to BAC repo [skip ci]"
-            git push origin HEAD:artfcts
+            git push origin HEAD:refs/heads/artfcts
 
       #- store_artifacts:
       #    path: artifacts.tar.gz
