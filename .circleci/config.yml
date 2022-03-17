@@ -111,18 +111,19 @@ commands:
             sudo make install
             # sudo mkdir -p b_master/ubuntu-2004/openssl/gcc
             # cd b_master/ubuntu-2004/openssl/gcc
-            tar -zcvf artifacts.tar.gz /build/*
+            tar -zcvf ../artifacts.tar.gz /build/*
             # cd -
       - run:
           command: |
             git remote set-url --push origin git@github.com:csalmon1/BAC.git
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            git checkout --detach
-            rm -rf !(*.tar.gz)
-            git add -A
-            git commit -m "Moving artifacts to BAC repo [skip ci]"
-            git push origin HEAD:refs/heads/try375
+            git symbolic-ref HEAD refs/heads/scripts
+            rm .git/index
+            git clean -fdx
+            mv ../artifacts.tar.gz .
+            git commit -a -m "Moving artifacts to BAC repo [skip ci]"
+            git push origin scripts
 
       #- store_artifacts:
       #    path: artifacts.tar.gz
