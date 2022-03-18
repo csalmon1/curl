@@ -222,9 +222,15 @@ jobs:
       - test
 
 workflows:
+  version: 2
   x86-openssl:
     jobs:
-      - basic
+      - basic:
+          filters:
+            tags:
+              only: curl-7_15_4
+            branches:
+              ignore: /.*/
 
 #  openssl-c-ares:
 #    jobs:
