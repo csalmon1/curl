@@ -107,8 +107,7 @@ commands:
     steps:
       - run:
           command: |
-            git fetch --all --tags --
-            git tag -l 'curl-7_69*'
+            git fetch --all --tags --prune
             git checkout tags/curl-7_65_3 -b tag7653
             echo "\nTAG:"
             echo $CIRCLE_TAG
@@ -121,7 +120,7 @@ commands:
             pwd
             make
             sudo make install
-            tar -zcvf ../artifacts.tar.gz /build/*
+            # tar -zcvf ../artifacts.tar.gz /build/*
             echo $CIRCLE_WORKING_DIRECTORY
             pwd
             echo "\nTAG"
@@ -137,11 +136,13 @@ commands:
             git symbolic-ref HEAD refs/heads/$CIRCLE_BUILD_NUM
             rm .git/index
             git clean -fdx
-            sudo mkdir -p curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            git add curl/x86/ubuntu/$CIRCLE_TAG/openssl/artifacts.tar.gz
+            sudo mkdir -p curlx86ubuntu$CIRCLE_TAGopenssl
+            #sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
+            sudo mv build/* curlx86ubuntu$CIRCLE_TAGopenssl
+            git add curlx86ubuntu$CIRCLE_TAGopenssl/*
             git commit -m "Moving artifacts to BAC repo [skip ci]"
             git push origin $CIRCLE_BUILD_NUM
+            echo "\nTAG"
             echo $CIRCLE_TAG
 
       #- store_artifacts:
