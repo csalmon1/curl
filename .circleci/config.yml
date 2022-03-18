@@ -228,7 +228,7 @@ workflows:
       - basic:
           filters:
             tags:
-              only: curl-7_15_4
+              only: "curl-7_15_4"
             branches:
               ignore: /.*/
 
