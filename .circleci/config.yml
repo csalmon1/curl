@@ -103,6 +103,11 @@ commands:
           command: |
             ./buildconf
             ./configure --enable-debug --enable-werror --with-openssl --enable-ares
+  gettags:
+    steps:
+      - run:
+          command: |
+            git fetch --all --tags --prune
   build:
     steps:
       - run: 
@@ -228,7 +233,7 @@ workflows:
       - basic:
           filters:
             tags:
-              only: "curl-7_15_4"
+              only: /^curl-7_69.*/
             branches:
               ignore: /.*/
 
