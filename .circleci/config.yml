@@ -31,7 +31,7 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --enable-warnings --enable-werror --with-openssl --prefix=/build
+            ./configure --enable-warnings --enable-werror --with-openssl --prefix=~/build
   configure-openssl-no-verbose:
     steps:
       - run:
@@ -138,7 +138,7 @@ commands:
             git clean -fdx
             sudo mkdir -p curlx86ubuntu$CIRCLE_TAGopenssl
             #sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            sudo mv build/* curlx86ubuntu$CIRCLE_TAGopenssl
+            sudo mv ~/build/* curlx86ubuntu$CIRCLE_TAGopenssl
             git add curlx86ubuntu$CIRCLE_TAGopenssl/*
             git commit -m "Moving artifacts to BAC repo [skip ci]"
             git push origin $CIRCLE_BUILD_NUM
