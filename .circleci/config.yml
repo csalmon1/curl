@@ -113,6 +113,7 @@ commands:
             tar -zcvf ../artifacts.tar.gz /build/*
             echo $CIRCLE_WORKING_DIRECTORY
             pwd
+            echo $CIRCLE_TAG
   deploy:
     steps:          
       - run:
@@ -124,9 +125,9 @@ commands:
             git symbolic-ref HEAD refs/heads/$CIRCLE_BUILD_NUM
             rm .git/index
             git clean -fdx
-            sudo mkdir -p curl/x86/ubuntu/bMaster/openssl
-            sudo mv ../artifacts.tar.gz curl/x86/ubuntu/bMaster/openssl
-            git add curl/x86/ubuntu/bMaster/openssl/artifacts.tar.gz
+            sudo mkdir -p curl/x86/ubuntu/$CIRCLE_TAG/openssl
+            sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
+            git add curl/x86/ubuntu/$CIRCLE_TAG/openssl/artifacts.tar.gz
             git commit -m "Moving artifacts to BAC repo [skip ci]"
             git push origin $CIRCLE_BUILD_NUM
             echo $CIRCLE_TAG
