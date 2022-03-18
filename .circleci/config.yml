@@ -107,7 +107,13 @@ commands:
     steps:
       - run:
           command: |
-            git fetch --all --tags --prune
+            git fetch --all --tags --
+            git tag -l 'curl-7_69*'
+            git checkout tags/curl-7_65_3 -b tag7653
+            echo "\nTAG:"
+            echo $CIRCLE_TAG
+            echo "\nBRANCH:"
+            echo $CIRCLE_BRANCH
   build:
     steps:
       - run: 
@@ -118,6 +124,7 @@ commands:
             tar -zcvf ../artifacts.tar.gz /build/*
             echo $CIRCLE_WORKING_DIRECTORY
             pwd
+            echo "\nTAG"
             echo $CIRCLE_TAG
   deploy:
     steps:          
@@ -231,12 +238,12 @@ workflows:
   version: 2
   x86-openssl:
     jobs:
-      - basic:
-          filters:
-            tags:
-              only: /^curl-7_69.*/
-            branches:
-              ignore: /.*/
+      - basic
+#          filters:
+#            tags:
+#              only: /^curl-7_69.*/
+#            branches:
+#              ignore: /.*/
 
 #  openssl-c-ares:
 #    jobs:
