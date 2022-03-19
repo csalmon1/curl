@@ -158,8 +158,8 @@ commands:
     steps:
       - run:
           command: |
-            touch /home/circleci/build/description.txt
-            echo "Binary Artifact Description" >> /home/circleci/build/description.txt
+            sudo touch /home/circleci/build/description.txt
+            sudo echo "Binary Artifact Description" >> /home/circleci/build/description.txt
             echo "Library: curl" >> /home/circleci/build/description.txt
             echo "Repo tag:" $TAG >> /home/circleci/build/description.txt
             echo "image: ubuntu-2004:202101-01" >> /home/circleci/build/description.txt
