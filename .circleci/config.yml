@@ -108,13 +108,9 @@ commands:
       - run:
           command: |
             git fetch --all --tags --prune
-            git checkout tags/curl-$TAG -b tag$TAG
-            echo "\nTAG:"
-            echo $CIRCLE_TAG
-            echo "\nBRANCH:"
-            echo $CIRCLE_BRANCH
-            echo "\nmy tag:"
-            echo $TAG
+            git checkout tags/$TAG -b tag$TAG
+            echo "\nmy tag:" $TAG
+
   build:
     steps:
       - run: 
@@ -137,11 +133,13 @@ commands:
             git symbolic-ref HEAD refs/heads/$TAG
             rm .git/index
             git clean -fdx
-            sudo mkdir -p curlx86ubuntu$TAGopensslgcc
+            dirname="${TAG}x86ubuntuopensslgcc"
+            sudo mkdir -p $dirname
+            echo "Directory name:" $dirname
             #sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            sudo mv /home/circleci/build/* curlx86ubuntu$TAGopensslgcc
-            git add curlx86ubuntu$TAGopensslgcc/*
-            git commit -m "Moving artifacts to BAC repo $TAG [skip ci]"
+            sudo mv /home/circleci/build/* $dirname
+            git add ${dirname}/*
+            git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
             git push origin $TAG
             echo "\nmy TAG"
             echo $TAG
@@ -153,9 +151,14 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="7_82_0"' >> $BASH_ENV
-            echo "\nmy tag:"
-            echo $TAG
+            echo 'export TAG="curl-7_82_0"' >> $BASH_ENV
+            
+  verify:
+    steps:
+      - run:
+          command: |
+            echo "my tag:" $TAG
+            git status
 
   test:
     steps:
@@ -174,6 +177,7 @@ jobs:
       - checkout
       - setvar
       - gettags
+      - verify
       - configure
       - build
       - deploy
