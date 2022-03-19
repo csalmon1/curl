@@ -109,8 +109,7 @@ commands:
           command: |
             git fetch --all --tags --prune
             git checkout tags/$TAG
-            echo "\nmy tag:" $TAG
-
+            echo "my tag:" $TAG
   build:
     steps:
       - run: 
@@ -119,10 +118,8 @@ commands:
             make
             sudo make install
             # tar -zcvf ../artifacts.tar.gz /build/*
-            echo $CIRCLE_WORKING_DIRECTORY
             pwd
-            echo "\nmy TAG"
-            echo $TAG
+            echo "my TAG" $TAG
   deploy:
     steps:          
       - run:
@@ -141,8 +138,7 @@ commands:
             git add ${dirname}/*
             git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
             git push origin tag${TAG}
-            echo "\nmy TAG"
-            echo $TAG
+            echo "my TAG" $TAG
 
       #- store_artifacts:
       #    path: artifacts.tar.gz
@@ -152,13 +148,23 @@ commands:
       - run:
           command: |
             echo 'export TAG="curl-7_82_0"' >> $BASH_ENV
-            
   verify:
     steps:
       - run:
           command: |
             echo "my tag:" $TAG
             git status
+  describe:
+    steps:
+      - run:
+          command: |
+            touch /home/circleci/build/description.txt
+            echo "Binary Artifact Description" >> /home/circleci/build/description.txt
+            echo "Library: curl" >> /home/circleci/build/description.txt
+            echo "Repo tag:" $TAG >> /home/circleci/build/description.txt
+            echo "image: ubuntu-2004:202101-01" >> /home/circleci/build/description.txt
+            echo "Circleci job name:" $CIRCLE_JOB >> /home/circleci/build/description.txt
+            echo "Circleci job number:" $CIRCLE_BUILD_NUM >> /home/circleci/build/description.txt
 
   test:
     steps:
@@ -171,7 +177,7 @@ executors:
     resource_class: medium
 
 jobs:
-  basic:
+  x86-openssl:
     executor: ubuntu
     steps:
       - checkout
@@ -180,6 +186,7 @@ jobs:
       - verify
       - configure
       - build
+      - describe
       - deploy
 #      - test
 
@@ -250,10 +257,9 @@ jobs:
       - test
 
 workflows:
-  version: 2
-  x86-openssl:
+  basic:
     jobs:
-      - basic
+      - x86-openssl
 
 #          filters:
 #            tags:
