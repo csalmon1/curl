@@ -160,11 +160,11 @@ commands:
           command: |
             sudo touch /home/circleci/build/description.txt
             sudo echo "Binary Artifact Description" >> /home/circleci/build/description.txt
-            echo "Library: curl" >> /home/circleci/build/description.txt
-            echo "Repo tag:" $TAG >> /home/circleci/build/description.txt
-            echo "image: ubuntu-2004:202101-01" >> /home/circleci/build/description.txt
-            echo "Circleci job name:" $CIRCLE_JOB >> /home/circleci/build/description.txt
-            echo "Circleci job number:" $CIRCLE_BUILD_NUM >> /home/circleci/build/description.txt
+            sudo echo "Library: curl" >> /home/circleci/build/description.txt
+            sudo echo "Repo tag:" $TAG >> /home/circleci/build/description.txt
+            sudo echo "image: ubuntu-2004:202101-01" >> /home/circleci/build/description.txt
+            sudo echo "Circleci job name:" $CIRCLE_JOB >> /home/circleci/build/description.txt
+            sudo echo "Circleci job number:" $CIRCLE_BUILD_NUM >> /home/circleci/build/description.txt
 
   test:
     steps:
