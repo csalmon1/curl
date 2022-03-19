@@ -108,7 +108,7 @@ commands:
       - run:
           command: |
             git fetch --all --tags --prune
-            git checkout tags/$TAG -b tag$TAG
+            git checkout tags/$TAG
             echo "\nmy tag:" $TAG
 
   build:
@@ -130,7 +130,7 @@ commands:
             git remote set-url --push origin git@github.com:csalmon1/BAC.git
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            git symbolic-ref HEAD refs/heads/$TAG
+            git symbolic-ref HEAD refs/heads/tag${TAG}
             rm .git/index
             git clean -fdx
             dirname="${TAG}x86ubuntuopensslgcc"
@@ -140,7 +140,7 @@ commands:
             sudo mv /home/circleci/build/* $dirname
             git add ${dirname}/*
             git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
-            git push origin $TAG
+            git push origin tag${TAG}
             echo "\nmy TAG"
             echo $TAG
 
