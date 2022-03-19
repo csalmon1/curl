@@ -108,11 +108,13 @@ commands:
       - run:
           command: |
             git fetch --all --tags --prune
-            git checkout tags/curl-7_65_3 -b tag7653
+            git checkout tags/curl-$TAG -b tag$TAG
             echo "\nTAG:"
             echo $CIRCLE_TAG
             echo "\nBRANCH:"
             echo $CIRCLE_BRANCH
+            echo "\nmy tag:"
+            echo $TAG
   build:
     steps:
       - run: 
@@ -123,30 +125,37 @@ commands:
             # tar -zcvf ../artifacts.tar.gz /build/*
             echo $CIRCLE_WORKING_DIRECTORY
             pwd
-            echo "\nTAG"
-            echo $CIRCLE_TAG
+            echo "\nmy TAG"
+            echo $TAG
   deploy:
     steps:          
       - run:
           command: |
-            echo $CIRCLE_TAG
             git remote set-url --push origin git@github.com:csalmon1/BAC.git
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            git symbolic-ref HEAD refs/heads/$CIRCLE_BUILD_NUM
+            git symbolic-ref HEAD refs/heads/$TAG
             rm .git/index
             git clean -fdx
-            sudo mkdir -p curlx86ubuntu$CIRCLE_TAGopenssl
+            sudo mkdir -p curlx86ubuntu$TAGopensslgcc
             #sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            sudo mv /home/circleci/build/* curlx86ubuntu$CIRCLE_TAGopenssl
-            git add curlx86ubuntu$CIRCLE_TAGopenssl/*
-            git commit -m "Moving artifacts to BAC repo [skip ci]"
-            git push origin $CIRCLE_BUILD_NUM
-            echo "\nTAG"
-            echo $CIRCLE_TAG
+            sudo mv /home/circleci/build/* curlx86ubuntu$TAGopensslgcc
+            git add curlx86ubuntu$TAGopensslgcc/*
+            git commit -m "Moving artifacts to BAC repo $TAG [skip ci]"
+            git push origin $TAG
+            echo "\nmy TAG"
+            echo $TAG
 
       #- store_artifacts:
       #    path: artifacts.tar.gz
+
+  setvar:
+    steps:
+      - run:
+          command: |
+            echo 'export TAG="7_82_0"' >> $BASH_ENV
+            echo "\nmy tag:"
+            echo $TAG
 
   test:
     steps:
@@ -163,6 +172,7 @@ jobs:
     executor: ubuntu
     steps:
       - checkout
+      - setvar
       - gettags
       - configure
       - build
@@ -240,6 +250,7 @@ workflows:
   x86-openssl:
     jobs:
       - basic
+
 #          filters:
 #            tags:
 #              only: /^curl-7_69.*/
