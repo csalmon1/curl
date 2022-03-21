@@ -148,7 +148,7 @@ commands:
       - aws-s3/copy:
           arguments:
           from: /home/circleci/build/description.txt
-          to: 'arn:aws-us-gov:s3:::curl-bucket'
+          to: 'arn:aws-us-gov:s3:us-gov-west-1:653605740874:accesspoint/curl-bucket-access'
 
   setvar:
     steps:
