@@ -146,6 +146,9 @@ commands:
   awsdeploy:
     steps:          
       - aws-s3/copy:
+          aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
+          aws-region: AWS_REGION_BLUE
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           arguments:
           from: /home/circleci/build/description.txt
           to: 'arn:aws-us-gov:s3:us-gov-west-1:653605740874:accesspoint/curl-bucket-access'
