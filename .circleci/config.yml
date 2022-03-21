@@ -143,6 +143,13 @@ commands:
       #- store_artifacts:
       #    path: artifacts.tar.gz
 
+  awsdeploy:
+    steps:          
+      - aws-s3/copy:
+          arguments:
+          from: /home/circleci/build/*
+          to: 'arn:aws-us-gov:s3:::curl-bucket'
+
   setvar:
     steps:
       - run:
@@ -165,6 +172,7 @@ commands:
             echo "Circleci job name:" $CIRCLE_JOB >> description.txt
             echo "Circleci job number:" $CIRCLE_BUILD_NUM >> description.txt
             sudo mv description.txt /home/circleci/build
+            sudo mv config.log /home/circleci/build
 
   test:
     steps:
@@ -175,6 +183,9 @@ executors:
     machine:
       image: ubuntu-2004:202010-01
     resource_class: medium
+    
+orbs:
+  aws-s3: circleci/aws-s3@3.0
 
 jobs:
   x86-openssl:
@@ -187,7 +198,7 @@ jobs:
       - configure
       - build
       - describe
-      - deploy
+      - awsdeploy
 #      - test
 
   no-verbose:
