@@ -150,7 +150,7 @@ commands:
       - run:
           command: |
             cd ../
-            git clone git@github.com:csalmon1/BAC. --branch=main
+            git clone git@github.com:csalmon1/BAC.git --branch=main
             cd BAC
             git checkout -b tag${TAG}
             git config user.email "csalmon@oceanit.com"
