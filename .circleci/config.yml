@@ -102,7 +102,7 @@ commands:
             ./buildconf
             SW_ED="wolfssl"
             echo "sw_editon: ${SW_ED}"
-            LDFLAGS="-Wl,-rpath,$HOME/wssh/lib" ./configure --enable-warnings --enable-werror --with-${SW_ED}=$HOME/wssl --with-wolfssh=$HOME/wssh
+            LDFLAGS="-Wl,-rpath,$HOME/wssh/lib" ./configure --enable-warnings --enable-werror --with-${SW_ED}=$HOME/wssl --with-wolfssh=$HOME/wssh --prefix=/home/circleci/build
             echo 'export SW_ED="wolfssl"' >> $BASH_ENV
             echo "sw_editon: ${SW_ED}"
   configure-cares-debug:
@@ -158,7 +158,7 @@ commands:
             cd ../
             git clone git@github.com:csalmon1/BAC.git --branch=main
             cd BAC
-            git checkout -b tag${TAG}${SW_ED}
+            git checkout -b tag${TAG}-${SW_ED}
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
             dirname="${TAG}-x86ubuntu${SW_ED}gcc"
@@ -167,7 +167,7 @@ commands:
             sudo mv /home/circleci/build/* $dirname
             git add ${dirname}/*
             git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
-            git push origin tag${TAG}${SW_ED}
+            git push origin tag${TAG}-${SW_ED}
             echo "my TAG" $TAG
             echo "my SW_ED" $SW_ED
 
@@ -185,7 +185,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_78_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_77_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
