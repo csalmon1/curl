@@ -34,6 +34,7 @@ commands:
             SW_ED="openssl"
             echo "sw_editon: ${SW_ED}"
             ./configure --enable-warnings --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
+            echo 'export SW_ED=${SW_ED}' >> $BASH_ENV
   configure-openssl-no-verbose:
     steps:
       - run:
@@ -155,7 +156,7 @@ commands:
             git checkout -b tag${TAG}
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            dirname="${TAG}x86ubuntuopensslgcc"
+            dirname="${TAG}-x86ubuntuopensslgcc"
             sudo mkdir -p $dirname
             echo "Directory name:" $dirname
             sudo mv /home/circleci/build/* $dirname
@@ -178,7 +179,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_81_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_80_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
@@ -186,6 +187,7 @@ commands:
           command: |
             echo "my tag:" $TAG
             git status
+            echo "sw_editon: ${SW_ED}"
   describe:
     steps:
       - run:
