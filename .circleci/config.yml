@@ -158,17 +158,18 @@ commands:
             cd ../
             git clone git@github.com:csalmon1/BAC.git --branch=main
             cd BAC
-            git checkout -b tag${TAG}
+            git checkout -b tag${TAG}${SW_ED}
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            dirname="${TAG}-x86ubuntuopensslgcc"
+            dirname="${TAG}-x86ubuntu${SW_ED}gcc"
             sudo mkdir -p $dirname
             echo "Directory name:" $dirname
             sudo mv /home/circleci/build/* $dirname
             git add ${dirname}/*
             git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
-            git push origin tag${TAG}
+            git push origin tag${TAG}${SW_ED}
             echo "my TAG" $TAG
+            echo "my SW_ED" $SW_ED
 
   aws-deploy:
     steps:          
@@ -184,7 +185,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_79_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_78_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
