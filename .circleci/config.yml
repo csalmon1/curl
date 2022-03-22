@@ -35,6 +35,7 @@ commands:
             echo "sw_editon: ${SW_ED}"
             ./configure --enable-warnings --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
             echo 'export SW_ED=${SW_ED}' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
   configure-openssl-no-verbose:
     steps:
       - run:
@@ -179,7 +180,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_80_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_79_1"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
@@ -227,6 +228,7 @@ jobs:
       - gettags
       - verify
       - configure
+      - verify
       - build
       - describe
       - bac-deploy
