@@ -34,7 +34,7 @@ commands:
             SW_ED="openssl"
             echo "sw_editon: ${SW_ED}"
             ./configure --enable-warnings --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
-            echo 'export SW_ED=${SW_ED}' >> $BASH_ENV
+            echo 'export SW_ED="openssl"' >> $BASH_ENV
             echo "sw_editon: ${SW_ED}"
   configure-openssl-no-verbose:
     steps:
@@ -100,7 +100,11 @@ commands:
       - run:
           command: |
             ./buildconf
-            LDFLAGS="-Wl,-rpath,$HOME/wssh/lib" ./configure --enable-warnings --enable-werror --with-wolfssl=$HOME/wssl --with-wolfssh=$HOME/wssh
+            SW_ED="wolfssl"
+            echo "sw_editon: ${SW_ED}"
+            LDFLAGS="-Wl,-rpath,$HOME/wssh/lib" ./configure --enable-warnings --enable-werror --with-${SW_ED}=$HOME/wssl --with-wolfssh=$HOME/wssh
+            echo 'export SW_ED="wolfssl"' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
   configure-cares-debug:
     steps:
       - run:
@@ -180,7 +184,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_79_1"' >> $BASH_ENV
+            echo 'export TAG="curl-7_79_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
@@ -249,8 +253,14 @@ jobs:
       - install-deps
       - install-wolfssl
       - install-wolfssh
+      - setvar
+      - gettags
+      - verify
       - configure-wolfssh
+      - verify
       - build
+      - describe
+      - bac-deploy
 
   no-proxy:
     executor: ubuntu
@@ -327,9 +337,9 @@ workflows:
 #    jobs:
 #      - no-verbose
 
-#  wolfssl-wolfssh:
-#    jobs:
-#      - wolfssh
+  wolfssl-wolfssh:
+    jobs:
+      - wolfssh
 
 #  arm-openssl:
 #    jobs:
