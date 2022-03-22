@@ -185,7 +185,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_77_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_82_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
