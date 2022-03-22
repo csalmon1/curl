@@ -31,7 +31,9 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --enable-warnings --enable-werror --with-openssl --prefix=/home/circleci/build
+            SW_ED="openssl"
+            echo "sw_editon: ${SW_ED}"
+            ./configure --enable-warnings --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
   configure-openssl-no-verbose:
     steps:
       - run:
@@ -143,7 +145,26 @@ commands:
       #- store_artifacts:
       #    path: artifacts.tar.gz
 
-  awsdeploy:
+  bac-deploy:
+    steps:          
+      - run:
+          command: |
+            cd ../
+            git clone git@github.com:csalmon1/BAC. --branch=main
+            cd BAC
+            git checkout -b tag${TAG}
+            git config user.email "csalmon@oceanit.com"
+            git config user.name "csalmon"
+            dirname="${TAG}x86ubuntuopensslgcc"
+            sudo mkdir -p $dirname
+            echo "Directory name:" $dirname
+            sudo mv /home/circleci/build/* $dirname
+            git add ${dirname}/*
+            git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
+            git push origin tag${TAG}
+            echo "my TAG" $TAG
+
+  aws-deploy:
     steps:          
       - aws-s3/copy:
           aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
@@ -158,6 +179,7 @@ commands:
       - run:
           command: |
             echo 'export TAG="curl-7_81_0"' >> $BASH_ENV
+            echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   verify:
     steps:
       - run:
@@ -169,9 +191,13 @@ commands:
       - run:
           command: |
             echo "Binary Artifact Description" >> description.txt
-            echo "Library: curl" >> description.txt
-            echo "Repo tag:" $TAG >> description.txt
-            echo "Image: ubuntu-2004:202101-01" >> description.txt
+            echo "vendor: the curl project" >> description.txt
+            echo "product: curl" >> description.txt
+            echo "version:" $TAG >> description.txt
+            echo "target_sw: ubuntu-2004:202101-01" >> description.txt
+            echo "target_hw: x86" >> description.txt
+            echo "sw_edition: ${SW_ED}" >> description.txt
+            echo "compiler: gcc" >> description.txt
             echo "Circleci job name:" $CIRCLE_JOB >> description.txt
             echo "Circleci job number:" $CIRCLE_BUILD_NUM >> description.txt
             sudo mv description.txt /home/circleci/build
@@ -201,7 +227,7 @@ jobs:
       - configure
       - build
       - describe
-      - awsdeploy
+      - bac-deploy
 #      - test
 
   no-verbose:
