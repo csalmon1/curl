@@ -152,14 +152,14 @@ commands:
       - run:
           command: |
             # Set version1 in bash
-            echo 'export TAG="curl-7_79_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_76_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
   setversion2:
     steps:
       - run:
           command: |
             # Set version2 in bash
-            echo 'export TAG="curl-7_80_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_76_1"' >> $BASH_ENV
   verify:
     steps:
       - run:
