@@ -122,34 +122,10 @@ commands:
     steps:
       - run: 
           command: |
-            pwd
             make
             sudo make install
-            # tar -zcvf ../artifacts.tar.gz /build/*
             pwd
             echo "my TAG" $TAG
-  deploy:
-    steps:          
-      - run:
-          command: |
-            git remote set-url --push origin git@github.com:csalmon1/BAC.git
-            git config user.email "csalmon@oceanit.com"
-            git config user.name "csalmon"
-            git symbolic-ref HEAD refs/heads/tag${TAG}
-            rm .git/index
-            git clean -fdx
-            dirname="${TAG}x86ubuntuopensslgcc"
-            sudo mkdir -p $dirname
-            echo "Directory name:" $dirname
-            #sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            sudo mv /home/circleci/build/* $dirname
-            git add ${dirname}/*
-            git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
-            git push origin tag${TAG}
-            echo "my TAG" $TAG
-
-      #- store_artifacts:
-      #    path: artifacts.tar.gz
 
   bac-deploy:
     steps:          
@@ -171,22 +147,19 @@ commands:
             echo "my TAG" $TAG
             echo "my SW_ED" $SW_ED
 
-  aws-deploy:
-    steps:          
-      - aws-s3/copy:
-          aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
-          aws-region: AWS_REGION_BLUE
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
-          arguments:
-          from: /home/circleci/build/description.txt
-          to: 'arn:aws-us-gov:s3:us-gov-west-1:653605740874:accesspoint/curl-bucket-access'
-
-  setvar:
+  setversion1:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_82_0"' >> $BASH_ENV
+            # Set version1 in bash
+            echo 'export TAG="curl-7_79_0"' >> $BASH_ENV
             echo 'export SW_ED="sw_edition"' >> $BASH_ENV
+  setversion2:
+    steps:
+      - run:
+          command: |
+            # Set version2 in bash
+            echo 'export TAG="curl-7_80_0"' >> $BASH_ENV
   verify:
     steps:
       - run:
@@ -200,7 +173,7 @@ commands:
           command: |
             echo "Binary Artifact Description" >> description.txt
             echo "vendor: the curl project" >> description.txt
-            echo "product: curl" >> description.txt
+            echo "product: libcurl" >> description.txt
             echo "version:" $TAG >> description.txt
             echo "target_sw: ubuntu-2004:202101-01" >> description.txt
             echo "target_hw: x86" >> description.txt
@@ -225,19 +198,29 @@ orbs:
   aws-s3: circleci/aws-s3@3.0
 
 jobs:
-  x86-openssl:
+  x86-openssl-v1:
     executor: ubuntu
     steps:
       - checkout
-      - setvar
+      - setversion1
       - gettags
-      - verify
       - configure
       - verify
       - build
       - describe
       - bac-deploy
-#      - test
+
+  x86-openssl-v2:
+    executor: ubuntu
+    steps:
+      - checkout
+      - setversion2
+      - gettags
+      - configure
+      - verify
+      - build
+      - describe
+      - bac-deploy
 
   no-verbose:
     executor: ubuntu
@@ -314,13 +297,8 @@ jobs:
 workflows:
   basic:
     jobs:
-      - x86-openssl
-
-#          filters:
-#            tags:
-#              only: /^curl-7_69.*/
-#            branches:
-#              ignore: /.*/
+      - x86-openssl-v1
+      - x86-openssl-v2
 
 #  openssl-c-ares:
 #    jobs:
@@ -338,9 +316,9 @@ workflows:
 #    jobs:
 #      - no-verbose
 
-  wolfssl-wolfssh:
-    jobs:
-      - wolfssh
+#  wolfssl-wolfssh:
+#    jobs:
+#      - wolfssh
 
 #  arm-openssl:
 #    jobs:
