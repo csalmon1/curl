@@ -159,7 +159,7 @@ commands:
       - run:
           command: |
             # Set version2 in bash
-            echo 'export TAG="curl-7_76_1"' >> $BASH_ENV
+            echo 'export TAG="curl-7_75_0"' >> $BASH_ENV
   verify:
     steps:
       - run:
