@@ -125,7 +125,6 @@ commands:
             pwd
             make
             sudo make install
-            # tar -zcvf ../artifacts.tar.gz /build/*
             pwd
             echo "my TAG" $TAG
   deploy:
@@ -185,9 +184,10 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_74_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_73_0"' >> $BASH_ENV
             echo 'export PLAT="x86"' >> $BASH_ENV
             echo 'export OS="ubuntu"' >> $BASH_ENV
+            echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
             echo 'export SW_ED="openssl"' >> $BASH_ENV
             echo 'export COMP_ARG=""' >> $BASH_ENV
             echo 'export COMP="gcc"' >> $BASH_ENV
@@ -197,7 +197,12 @@ commands:
           command: |
             echo "my tag:" $TAG
             git status
+            echo "platform: ${PLAT}"
+            echo "OS: ${OS}"
             echo "sw_editon: ${SW_ED}"
+            echo "compiler arg: ${COMP_ARG}"
+            echo "compiler: ${COMP}"
+
   describe:
     steps:
       - run:
@@ -205,11 +210,12 @@ commands:
             echo "Binary Artifact Description" >> description.txt
             echo "vendor: the curl project" >> description.txt
             echo "product: curl" >> description.txt
-            echo "version:" $TAG >> description.txt
-            echo "target_sw: ubuntu-2004:202101-01" >> description.txt
-            echo "target_hw: x86" >> description.txt
+            echo "version:" ${TAG} >> description.txt
+            echo "target_hw: ${PLAT}" >> description.txt
+            echo "target_sw: ${OS_DESC}" >> description.txt
             echo "sw_edition: ${SW_ED}" >> description.txt
-            echo "compiler: gcc" >> description.txt
+            echo "compiler arg: ${COMP_ARG}" >> description.txt
+            echo "compiler: ${COMP}" >> description.txt
             echo "Circleci job name:" $CIRCLE_JOB >> description.txt
             echo "Circleci job number:" $CIRCLE_BUILD_NUM >> description.txt
             sudo mv description.txt /home/circleci/build
