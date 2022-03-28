@@ -184,12 +184,12 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_73_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_55_0"' >> $BASH_ENV
             echo 'export PLAT="x86"' >> $BASH_ENV
             echo 'export OS="ubuntu"' >> $BASH_ENV
             echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
             echo 'export SW_ED="openssl"' >> $BASH_ENV
-            echo 'export COMP_ARG=""' >> $BASH_ENV
+            echo 'export COMP_ARG="noverb"' >> $BASH_ENV
             echo 'export COMP="gcc"' >> $BASH_ENV
   verify:
     steps:
@@ -243,7 +243,6 @@ jobs:
       - gettags
       - verify
       - configure
-#      - configure-openssl-no-verbose
       - verify
       - build
       - describe
@@ -255,8 +254,13 @@ jobs:
     steps:
       - checkout
       - install-deps
+      - setvar
+      - gettags
       - configure-openssl-no-verbose
+      - verify
       - build
+      - describe
+      - bac-deploy
 
   wolfssh:
     executor: ubuntu
@@ -323,9 +327,9 @@ jobs:
       - test
 
 workflows:
-  basic:
-    jobs:
-      - x86-openssl
+#  basic:
+#    jobs:
+#      - x86-openssl
 
 #          filters:
 #            tags:
@@ -345,9 +349,9 @@ workflows:
 #    jobs:
 #      - no-proxy
 
-#  openssl-no-verbose:
-#    jobs:
-#      - no-verbose
+  openssl-no-verbose:
+    jobs:
+      - no-verbose
 
 #  wolfssl-wolfssh:
 #    jobs:
