@@ -41,7 +41,7 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --disable-verbose --enable-werror --with-openssl
+            ./configure --disable-verbose --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
   configure-no-proxy:
     steps:
       - run:
@@ -185,8 +185,8 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_82_0"' >> $BASH_ENV
-            echo 'export SW_ED="sw_edition"' >> $BASH_ENV
+            echo 'export TAG="curl-7_55_0"' >> $BASH_ENV
+            echo 'export SW_ED="openssl"' >> $BASH_ENV
   verify:
     steps:
       - run:
@@ -232,7 +232,8 @@ jobs:
       - setvar
       - gettags
       - verify
-      - configure
+#      - configure
+      - configure-openssl-no-verbose
       - verify
       - build
       - describe
@@ -338,9 +339,9 @@ workflows:
 #    jobs:
 #      - no-verbose
 
-  wolfssl-wolfssh:
-    jobs:
-      - wolfssh
+#  wolfssl-wolfssh:
+#    jobs:
+#      - wolfssh
 
 #  arm-openssl:
 #    jobs:
