@@ -122,7 +122,8 @@ commands:
     steps:
       - run:
           command: |
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
+            ./buildconf
+            ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
 
   gettags:
     steps:
@@ -268,11 +269,13 @@ jobs:
       name: win/default
       size: "medium"
     steps:
-      - run:
-         command: |
-          $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
-          $PSVersionTable
-      - win-prepare
+      - checkout
+      - win-configure
+    #  - run:
+    #     command: |
+    #      $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+    #      $PSVersionTable
+    #  - win-prepare
 
   no-verbose:
     executor: ubuntu
