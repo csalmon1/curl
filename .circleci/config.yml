@@ -122,11 +122,9 @@ commands:
     steps:
       - run:
           command: |
-            dir
-            cd curl
-            buildconf.bat
-          #  ./buildconf
-          #  ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
+            echo hello && echo world
+            ./buildconf
+            ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
 
   gettags:
     steps:
@@ -271,6 +269,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
+      shell: bash.exe
     steps:
       - checkout
       - win-configure
