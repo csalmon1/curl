@@ -132,6 +132,11 @@ commands:
           command: |
             echo compile
             C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1 && make V=1 install"
+            
+  win-view:
+    steps:
+      - run:
+          command: |
             dir
             dir \build\mingw32
   gettags:
@@ -283,6 +288,7 @@ jobs:
       - win-prepare
       - win-configure
       - win-compile
+      - win-view
 
   no-verbose:
     executor: ubuntu
