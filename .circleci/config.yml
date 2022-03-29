@@ -131,14 +131,22 @@ commands:
       - run:
           command: |
             echo compile
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1 && make V=1 install"
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1"
             
+  win-install:
+    steps:
+      - run:
+          command: |
+            echo install
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;"
+  
   win-view:
     steps:
       - run:
           command: |
             dir
             dir \build\mingw32
+
   gettags:
     steps:
       - run:
@@ -288,6 +296,7 @@ jobs:
       - win-prepare
       - win-configure
       - win-compile
+      - win-install
       - win-view
 
   no-verbose:
