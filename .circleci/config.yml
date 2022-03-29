@@ -122,8 +122,9 @@ commands:
     steps:
       - run:
           command: |
-            ./buildconf
-            ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
+            buildconf.bat
+          #  ./buildconf
+          #  ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
 
   gettags:
     steps:
