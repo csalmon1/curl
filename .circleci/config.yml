@@ -123,8 +123,8 @@ commands:
     steps:
       - run:
           command: |
-            ./buildconf.bat
-            ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
+            echo configure
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
   gettags:
     steps:
@@ -273,7 +273,7 @@ jobs:
     steps:
       - checkout
       - win-prepare
-    #  - win-configure
+      - win-configure
 
   no-verbose:
     executor: ubuntu
