@@ -209,7 +209,7 @@ commands:
           command: |
             echo "Binary Artifact Description" >> description.txt
             echo "vendor: the curl project" >> description.txt
-            echo "product: curl" >> description.txt
+            echo "product: libcurl" >> description.txt
             echo "version:" ${TAG} >> description.txt
             echo "target_hw: ${PLAT}" >> description.txt
             echo "target_sw: ${OS_DESC}" >> description.txt
@@ -233,6 +233,7 @@ executors:
     
 orbs:
   aws-s3: circleci/aws-s3@3.0
+  win: circleci/windows@2.2.0
 
 jobs:
   x86-openssl:
@@ -248,6 +249,14 @@ jobs:
       - describe
       - bac-deploy
 #      - test
+
+  win32-openssl:
+    executor:
+      name: win/default
+      size: "medium"
+    steps:
+      - run:
+         command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
 
   no-verbose:
     executor: ubuntu
@@ -331,11 +340,9 @@ workflows:
 #    jobs:
 #      - x86-openssl
 
-#          filters:
-#            tags:
-#              only: /^curl-7_69.*/
-#            branches:
-#              ignore: /.*/
+  win-basic:
+    jobs:
+      - win32-openssl
 
 #  openssl-c-ares:
 #    jobs:
@@ -349,9 +356,9 @@ workflows:
 #    jobs:
 #      - no-proxy
 
-  openssl-no-verbose:
-    jobs:
-      - no-verbose
+#  openssl-no-verbose:
+#    jobs:
+#      - no-verbose
 
 #  wolfssl-wolfssh:
 #    jobs:
