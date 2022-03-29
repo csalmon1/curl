@@ -126,6 +126,14 @@ commands:
             echo configure
             C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
+  win-compile:
+    steps:
+      - run:
+          command: |
+            echo compile
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1 && make V=1 install"
+            dir
+            dir \build\mingw32
   gettags:
     steps:
       - run:
@@ -274,6 +282,7 @@ jobs:
       - checkout
       - win-prepare
       - win-configure
+      - win-compile
 
   no-verbose:
     executor: ubuntu
