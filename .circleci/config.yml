@@ -256,7 +256,9 @@ jobs:
       size: "medium"
     steps:
       - run:
-         command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+         command: |
+          $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+          $PSVersionTable
 
   no-verbose:
     executor: ubuntu
