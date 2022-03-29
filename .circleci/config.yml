@@ -122,6 +122,7 @@ commands:
     steps:
       - run:
           command: |
+            dir
             cd curl
             buildconf.bat
           #  ./buildconf
