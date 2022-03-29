@@ -111,6 +111,19 @@ commands:
           command: |
             ./buildconf
             ./configure --enable-debug --enable-werror --with-openssl --enable-ares
+
+  win-prepare:
+    steps:
+      - run:
+          command: |
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket"
+
+  win-configure:
+    steps:
+      - run:
+          command: |
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
+
   gettags:
     steps:
       - run:
@@ -259,6 +272,7 @@ jobs:
          command: |
           $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
           $PSVersionTable
+      - win-prepare
 
   no-verbose:
     executor: ubuntu
