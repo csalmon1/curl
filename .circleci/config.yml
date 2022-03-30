@@ -296,7 +296,7 @@ jobs:
       shell: bash.exe
     steps:
       - checkout
-      - win-prepare
+    #  - win-prepare
       - win-configure
       - win-compile
       - win-install
