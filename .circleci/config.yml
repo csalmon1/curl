@@ -116,7 +116,6 @@ commands:
     steps:
       - run:
           command: |
-            choco -?
             choco install libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl &&
             python3 -m pip install --prefer-binary impacket
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket"
