@@ -117,14 +117,17 @@ commands:
       - run:
           command: |
             echo prepare
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket"
+            pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket
+          #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket"
 
   win-configure:
     steps:
       - run:
           command: |
             echo configure
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
+            ./buildconf.bat
+            ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
+          #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
   win-compile:
     steps:
@@ -290,7 +293,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: cmd.exe
+      shell: bash.exe
     steps:
       - checkout
       - win-prepare
