@@ -116,8 +116,8 @@ commands:
     steps:
       - run:
           command: |
-            echo prepare
-            choco -?
+            echo prepare &&
+            choco -? &&
             choco install libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket"
 
@@ -125,8 +125,8 @@ commands:
     steps:
       - run:
           command: |
-            echo configure
-            autoreconf -fi
+            echo configure &&
+            autoreconf -fi &&
             ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
@@ -134,21 +134,21 @@ commands:
     steps:
       - run:
           command: |
-            echo compile
+            echo compile &&
             C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1"
             
   win-install:
     steps:
       - run:
           command: |
-            echo install
+            echo install &&
             C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;"
   
   win-view:
     steps:
       - run:
           command: |
-            dir
+            dir &&
             dir \build\mingw32
 
   win-build:
