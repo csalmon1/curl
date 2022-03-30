@@ -117,10 +117,6 @@ commands:
       - run:
           command: |
             echo prepare
-            cp "${git-sdk}/usr/bin/pacman.exe" ${git}/usr/bin
-            cp "${git-sdk}/etc/pacman.conf" ${git}/etc
-            cp "${git-sdk}/etc/pacman.d" ${git}/etc
-            cp "${git-sdk}/var" ${git}/
             pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl && python3 -m pip install --prefer-binary impacket"
 
@@ -153,6 +149,16 @@ commands:
           command: |
             dir
             dir \build\mingw32
+
+  win-build:
+    steps:
+      - run:
+          command: |
+            call buildconf.bat
+            cd winbuild
+            call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+            nmake /f Makefile.vc mode=dll VC=15 "SSL_PATH=C:\OpenSSL-v111-Win64" WITH_SSL=dll MACHINE=x64 DEBUG=%DEBUG% ENABLE_UNICODE=%ENABLE_UNICODE%
+            ..\builds\libcurl-vc15-x64-%PATHPART%-dll-ssl-dll-ipv6-sspi\bin\curl.exe -V
 
   gettags:
     steps:
@@ -297,14 +303,15 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: bash.exe
+      shell: cmd.exe
     steps:
       - checkout
-      - win-prepare
-      - win-configure
-      - win-compile
-      - win-install
-      - win-view
+      - win-build
+    #  - win-prepare
+    #  - win-configure
+    #  - win-compile
+    #  - win-install
+    #  - win-view
 
   no-verbose:
     executor: ubuntu
