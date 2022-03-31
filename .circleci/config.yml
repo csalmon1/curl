@@ -117,6 +117,7 @@ commands:
       - run:
           command: |
             dir
+            pwd
           #  choco install msys2
       - run:
           command: |
