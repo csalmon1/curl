@@ -122,7 +122,7 @@ commands:
       - run:
           command: |
             curl -LO https://github.com/msys2/msys2-installer/releases/download/2022-03-19/msys2-x86_64-20220319.exe
-            msys2-x86_64-20220319.exe -y C:\msys64
+            ./msys2-x86_64-20220319.exe -y C:\msys64
           #  choco install msys2 --params "/NoUpdate /InstallDir:C:\msys64"
   win-prep-pacman:
     steps:
