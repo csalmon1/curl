@@ -121,7 +121,8 @@ commands:
     steps:
       - run:
           command: |
-            curl -LO https://github.com/msys2/msys2-installer/releases/download/2022-03-19/msys2-x86_64-20220319.exe && msys2-x86_64-20220319.exe -y C:\msys64
+            curl -LO https://github.com/msys2/msys2-installer/releases/download/2022-03-19/msys2-x86_64-20220319.exe
+            msys2-x86_64-20220319.exe -y C:\msys64
           #  choco install msys2 --params "/NoUpdate /InstallDir:C:\msys64"
   win-prep-pacman:
     steps:
@@ -317,7 +318,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: cmd.exe
+      shell: bash.exe
     steps:
     #  - checkout
     #  - win-build
