@@ -112,11 +112,18 @@ commands:
             ./buildconf
             ./configure --enable-debug --enable-werror --with-openssl --enable-ares
 
-  win-prepare:
+  win-prep-choco:
     steps:
       - run:
           command: |
+            choco upgrade chocolatey
+  win-prep-msys2:
+    steps:
+      - run:
+          command: |          
             choco install msys2 --params "/NoUpdate /InstallDir:C:\msys64"
+  win-prep-pacman:
+    steps:
       - run:
           command: |
             C:\msys64\usr\bin\sh -l -c "pacman -Syu"
@@ -130,8 +137,7 @@ commands:
     steps:
       - run:
           command: |
-            echo configure &&
-            autoreconf -fi &&
+            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf"
             ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
@@ -314,7 +320,9 @@ jobs:
     steps:
     #  - checkout
     #  - win-build
-      - win-prepare
+      - win-prep-choco
+      - win-prep-msys2
+      - win-prep-pacman
       - win-configure
       - win-compile
       - win-install
