@@ -319,7 +319,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: bash.exe
+      shell: cmd.exe
     steps:
     #  - checkout
     #  - win-build
