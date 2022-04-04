@@ -146,7 +146,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -Syu'
           #  bash -l -c "pacman -Syu"
           #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
 
