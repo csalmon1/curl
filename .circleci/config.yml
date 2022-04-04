@@ -341,7 +341,7 @@ jobs:
       size: "medium"
       shell: cmd.exe
     steps:
-    #  - checkout
+      - checkout
     #  - win-build
       - win-prep-choco
     #  - win-prep-msys2
