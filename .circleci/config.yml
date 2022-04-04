@@ -146,7 +146,8 @@ commands:
     steps:
       - run:
           command: |
-            bash -l -e "pacman -Syu"
+            C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
+          #  bash -l -c "pacman -Syu"
           #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
 
   win-configure:
@@ -338,7 +339,7 @@ jobs:
     #  - win-build
     #  - win-prep-choco
       - win-prep-msys2
-    #  - win-prep-shell
+      - win-prep-shell
       - win-prep-pacman
       - win-configure
       - win-compile
