@@ -154,14 +154,13 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'python3 -m pip install --prefer-binary impacket'
+            C:\tools\msys64\usr\bin\sh -l -c 'python -m pip install --prefer-binary impacket'
 
   win-configure:
     steps:
       - run:
           command: |
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf"
-            ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl
+            C:\msys64\usr\bin\sh -l -c './buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
   win-compile:
@@ -169,7 +168,7 @@ commands:
       - run:
           command: |
             echo compile &&
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1"
+            C:\msys64\usr\bin\sh -l -c 'make V=1'
             
   win-install:
     steps:
@@ -344,7 +343,7 @@ jobs:
     #  - checkout
     #  - win-build
       - win-prep-choco
-      - win-prep-msys2
+    #  - win-prep-msys2
       - win-prep-shell
       - win-prep-pacman
       - win-prepare
