@@ -129,7 +129,8 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c "echo 'hello shell'"
+            call RefreshEnv.cmd
+          #  C:\tools\msys64\usr\bin\sh -l -c "echo 'hello shell'"
           #shell: cmd.exe
           #  C:\tools\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && pacman -S mingw-w64-x86_64-libssh2"
           #  pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl
