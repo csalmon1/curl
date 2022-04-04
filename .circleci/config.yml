@@ -336,7 +336,7 @@ jobs:
     #  - win-build
     #  - win-prep-choco
       - win-prep-msys2
-      - win-prep-shell
+    #  - win-prep-shell
       - win-prep-pacman
       - win-configure
       - win-compile
