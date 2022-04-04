@@ -162,20 +162,20 @@ commands:
     steps:
       - run:
           command: |
-            C:\msys64\usr\bin\sh -l -c './buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
+            C:\tools\msys64\usr\bin\sh -l -c './buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
           #  C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && ./buildconf && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl"
 
   win-compile:
     steps:
       - run:
           command: |
-            echo compile && C:\msys64\usr\bin\sh -l -c 'make V=1'
+            echo compile && C:\tools\msys64\usr\bin\sh -l -c 'make V=1'
             
   win-install:
     steps:
       - run:
           command: |
-            echo install && C:\msys64\usr\bin\sh -l -c 'make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;'
+            echo install && C:\tools\msys64\usr\bin\sh -l -c 'make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;'
   
   win-view:
     steps:
