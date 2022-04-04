@@ -440,7 +440,7 @@ workflows:
 
   win-basic:
     jobs:
-      - win64-openssl
+      - win32-openssl
 
 #  openssl-c-ares:
 #    jobs:
