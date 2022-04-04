@@ -154,7 +154,9 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'python -m pip install --prefer-binary impacket'
+            python -m pip install --prefer-binary impacket
+          #  C:\tools\msys64\usr\bin\sh -l -c 'python -m pip install --prefer-binary impacket'
+          shell: bash.exe
 
   win-configure:
     steps:
@@ -167,15 +169,13 @@ commands:
     steps:
       - run:
           command: |
-            echo compile &&
-            C:\msys64\usr\bin\sh -l -c 'make V=1'
+            echo compile && C:\msys64\usr\bin\sh -l -c 'make V=1'
             
   win-install:
     steps:
       - run:
           command: |
-            echo install &&
-            C:\msys64\usr\bin\sh -l -c "cd $(echo '%cd%') && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;"
+            echo install && C:\msys64\usr\bin\sh -l -c 'make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;'
   
   win-view:
     steps:
