@@ -183,7 +183,8 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'C:/tools/msys64/usr/bin/autoreconf -fi'
+            C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi'
+          #  C:\tools\msys64\usr\bin\sh -l -c 'C:/tools/msys64/usr/bin/autoreconf -fi'
           #  ./buildconf.bat
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
@@ -379,8 +380,8 @@ jobs:
     #  - win-prepare3
       - win-prep-pip
       - win-prep-shell
-      - win-configure1
-      - win-configure2
+    #  - win-configure1
+    #  - win-configure2
       - win-configure3
       - win-configure4
       - win-compile
