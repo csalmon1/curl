@@ -146,7 +146,9 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
+            apt-get install autoconf
+          shell: bash.exe
+          #  C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
   win-prepare3:
     steps:
       - run:
@@ -183,8 +185,9 @@ commands:
     steps:
       - run:
           command: |
-            C:/tools/msys64/usr/bin/autoreconf-2.69 -fiv
+            autoreconf -fiv
           shell: bash.exe
+          #  C:/tools/msys64/usr/bin/autoreconf-2.69 -fiv
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi'
           #  C:\tools\msys64\usr\bin\sh -l -c 'C:/tools/msys64/usr/bin/autoreconf -fi'
           #  ./buildconf.bat
