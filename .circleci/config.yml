@@ -141,7 +141,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
   win-prepare2:
     steps:
       - run:
@@ -194,7 +194,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c './configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
+            C:\tools\msys64\usr\bin\sh -l -c './configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl'
           #shell: bash.exe
   win-compile:
     steps:
@@ -365,7 +365,7 @@ jobs:
       - bac-deploy
 #      - test
 
-  win32-openssl:
+  win64-openssl:
     executor:
       name: win/default
       size: "medium"
@@ -390,7 +390,7 @@ jobs:
       - win-install
       - win-view
 
-  win64-openssl:
+  win64-openssl-dkr:
     docker:
       - image: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
     steps:
@@ -487,7 +487,7 @@ workflows:
 
   win-basic:
     jobs:
-      - win32-openssl
+      - win64-openssl
 
 #  openssl-c-ares:
 #    jobs:
