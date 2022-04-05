@@ -141,8 +141,13 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf automake pkg-config libtool libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
   win-prepare2:
+    steps:
+      - run:
+          command: |
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S autoconf'
+  win-prepare3:
     steps:
       - run:
           command: |
@@ -360,6 +365,7 @@ jobs:
       - win-prep-pacman
       - win-prepare
       - win-prepare2
+      - win-prepare3
       - win-prep-pip
       - win-configure
       - win-configure2
