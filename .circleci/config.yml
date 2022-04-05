@@ -141,7 +141,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf pkg-config libtool libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf=2.69 pkg-config libtool libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
 
   win-prep-pacman:
     steps:
