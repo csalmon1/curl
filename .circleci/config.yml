@@ -162,9 +162,7 @@ commands:
     steps:
       - run:
           command: |
-            pwd
             ./buildconf.bat
-            ls
           shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
   win-configure2:
@@ -357,6 +355,7 @@ jobs:
       - win-prepare
       - win-prep-pip
       - win-configure
+      - win-configure2
       - win-compile
       - win-install
       - win-view
