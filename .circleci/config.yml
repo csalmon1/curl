@@ -121,7 +121,8 @@ commands:
     steps:
       - run:
           command: |
-            choco upgrade --no-progress -y msys2
+            C:\tools\msys64\usr\bin\sh -l -c "cd $(echo '%cd%')"
+          #  choco upgrade --no-progress -y msys2
           #  curl -LO https://github.com/msys2/msys2-installer/releases/download/2022-03-19/msys2-x86_64-20220319.exe
           #  ./msys2-x86_64-20220319.exe
           #  choco install msys2 --params "/NoUpdate /InstallDir:C:\msys64"
@@ -350,7 +351,7 @@ jobs:
       - checkout
     #  - win-build
       - win-prep-choco
-    #  - win-prep-msys2
+      - win-prep-msys2
       - win-prep-shell
       - win-prep-pacman
       - win-prepare
