@@ -183,7 +183,9 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi'
+            autoreconf-2.69 -fiv
+          shell: bash.exe
+          #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi'
           #  C:\tools\msys64\usr\bin\sh -l -c 'C:/tools/msys64/usr/bin/autoreconf -fi'
           #  ./buildconf.bat
           #shell: bash.exe
