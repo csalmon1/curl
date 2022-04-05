@@ -367,6 +367,7 @@ jobs:
       - win-prepare2
     #  - win-prepare3
       - win-prep-pip
+      - win-prep-shell
       - win-configure
       - win-configure2
       - win-compile
