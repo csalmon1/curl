@@ -141,13 +141,13 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf pkg-config libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar autoconf pkg-config libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
 
   win-prep-pacman:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -Syu'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -Syu'
           #  bash -l -c "pacman -Syu"
           #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
 
@@ -163,7 +163,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && autoreconf -fi'
           #  ./buildconf.bat
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
@@ -171,19 +171,19 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c './configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
           #shell: bash.exe
   win-compile:
     steps:
       - run:
           command: |
-            echo compile && C:\tools\msys64\usr\bin\sh -l -c 'make V=1'
+            echo compile && C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && make V=1'
             
   win-install:
     steps:
       - run:
           command: |
-            echo install && C:\tools\msys64\usr\bin\sh -l -c 'make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;'
+            echo install && C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;'
   
   win-view:
     steps:
@@ -351,7 +351,7 @@ jobs:
       - checkout
     #  - win-build
       - win-prep-choco
-      - win-prep-msys2
+    #  - win-prep-msys2
       - win-prep-shell
       - win-prep-pacman
       - win-prepare
