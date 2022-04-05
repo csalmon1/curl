@@ -167,16 +167,27 @@ commands:
             python -m pip install --prefer-binary impacket
           #  C:\tools\msys64\usr\bin\sh -l -c 'python -m pip install --prefer-binary impacket'
           shell: bash.exe
-
-  win-configure:
+  win-configure1:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi'
+            ls C:/tools/msys64/usr/bin
+          shell: bash.exe
+  win-configure2:
+    steps:
+      - run:
+          command: |
+            ls /usr/bin
+          shell: bash.exe
+  win-configure3:
+    steps:
+      - run:
+          command: |
+            C:\tools\msys64\usr\bin\sh -l -c 'C:/tools/msys64/usr/bin/autoreconf -fi'
           #  ./buildconf.bat
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
-  win-configure2:
+  win-configure4:
     steps:
       - run:
           command: |
@@ -368,8 +379,10 @@ jobs:
     #  - win-prepare3
       - win-prep-pip
       - win-prep-shell
-      - win-configure
+      - win-configure1
       - win-configure2
+      - win-configure3
+      - win-configure4
       - win-compile
       - win-install
       - win-view
