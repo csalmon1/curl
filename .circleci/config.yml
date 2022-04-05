@@ -141,13 +141,13 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar autoconf pkg-config libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf pkg-config libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
 
   win-prep-pacman:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -Syu'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -Syu'
           #  bash -l -c "pacman -Syu"
           #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
 
