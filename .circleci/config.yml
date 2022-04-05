@@ -142,7 +142,11 @@ commands:
       - run:
           command: |
             C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf automake pkg-config libtool libssh2-devel mingw-w64-i686-libssh2 mingw-w64-i686-python-pip mingw-w64-i686-python-wheel mingw-w64-i686-python-pyopenssl'
-
+  win-prepare2:
+    steps:
+      - run:
+          command: |
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -U autoconf'
   win-prep-pacman:
     steps:
       - run:
@@ -355,6 +359,7 @@ jobs:
       - win-prep-shell
       - win-prep-pacman
       - win-prepare
+      - win-prepare2
       - win-prep-pip
       - win-configure
       - win-configure2
