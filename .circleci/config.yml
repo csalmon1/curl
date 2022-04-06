@@ -141,12 +141,12 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
   win-prepare2:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool perl groff'
           #  apt-get install autoconf
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.13 m4'
@@ -154,7 +154,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -U autoconf'
+            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
   win-prep-pacman:
     steps:
       - run:
@@ -388,7 +388,7 @@ jobs:
       - win-prep-pacman
       - win-prepare
       - win-prepare2
-    #  - win-prepare3
+      - win-prepare3
       - win-prep-pip
       - win-prep-shell
       - win-configure3
