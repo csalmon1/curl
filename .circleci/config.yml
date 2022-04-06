@@ -196,6 +196,11 @@ commands:
     steps:
       - run:
           command: |
+            C:/tools/msys64/usr/bin/buildconf
+  win-configure5:
+    steps:
+      - run:
+          command: |
             C:\tools\msys64\usr\bin\sh -l -c './configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl'
           #shell: bash.exe
   win-compile:
@@ -389,6 +394,7 @@ jobs:
       - win-configure3
       - win-configure2
       - win-configure4
+      - win-configure5
       - win-compile
       - win-install
       - win-view
