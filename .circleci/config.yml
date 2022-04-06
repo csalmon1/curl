@@ -196,7 +196,7 @@ commands:
     steps:
       - run:
           command: |
-            C:/tools/msys64/usr/bin/buildconf
+            ./buildconf
   win-configure5:
     steps:
       - run:
