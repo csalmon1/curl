@@ -180,7 +180,7 @@ commands:
     steps:
       - run:
           command: |
-            ls /usr/bin
+            ls
           shell: bash.exe
   win-configure3:
     steps:
@@ -196,8 +196,8 @@ commands:
     steps:
       - run:
           command: |
-            ./configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl
-          shell: bash.exe
+            C:\tools\msys64\usr\bin\sh -l -c './configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl'
+          #shell: bash.exe
   win-compile:
     steps:
       - run:
@@ -387,6 +387,7 @@ jobs:
     #  - win-configure1
     #  - win-configure2
       - win-configure3
+      - win-configure2
       - win-configure4
       - win-compile
       - win-install
