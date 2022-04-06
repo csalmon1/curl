@@ -197,6 +197,7 @@ commands:
       - run:
           command: |
             ./buildconf
+          shell: bash.exe
   win-configure5:
     steps:
       - run:
