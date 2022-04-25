@@ -383,7 +383,7 @@ jobs:
       - checkout
     #  - win-build
       - win-prep-choco
-    #  - win-prep-msys2
+      - win-prep-msys2
       - win-prep-shell
       - win-prep-pacman
       - win-prepare
@@ -391,6 +391,7 @@ jobs:
       - win-prepare3
       - win-prep-pip
       - win-prep-shell
+      - win-configure2
       - win-configure3
       - win-configure1
       - win-configure2
