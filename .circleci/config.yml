@@ -121,7 +121,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'ls ../'
+            C:\tools\msys64\usr\bin\sh -l -c 'ls C:\tools\msys64\usr\bin'
           #  choco upgrade --no-progress -y msys2
           #  curl -LO https://github.com/msys2/msys2-installer/releases/download/2022-03-19/msys2-x86_64-20220319.exe
           #  ./msys2-x86_64-20220319.exe
@@ -141,12 +141,12 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
   win-prepare2:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool perl groff'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool perl groff'
           #  apt-get install autoconf
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.13 m4'
@@ -154,7 +154,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
   win-prep-pacman:
     steps:
       - run:
