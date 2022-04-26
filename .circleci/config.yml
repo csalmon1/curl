@@ -186,7 +186,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && autoreconf-2.69 -fi -vv'
+            C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi -vv -I C:/Users/circleci/project'
           #  C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project'
