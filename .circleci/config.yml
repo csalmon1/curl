@@ -198,7 +198,9 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && ./buildconf'
+            ./buildconf
+          shell: bash.exe  
+          #  C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && ./buildconf'
           #shell: bash.exe
   win-configure5:
     steps:
