@@ -186,7 +186,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\autoreconf-2.69 -fi -vv'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:/tools/msys64/usr/bin/autoreconf-2.69 -fi'
           #  C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project'
@@ -394,8 +394,8 @@ jobs:
       - win-prep-shell
       - win-configure2
       - win-configure3
-      - win-configure1
       - win-configure2
+      - win-prep-msys2
     #  - win-configure4
       - win-configure5
       - win-compile
