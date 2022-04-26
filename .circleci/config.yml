@@ -141,12 +141,12 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
   win-prepare2:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool perl groff'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool perl groff'
           #  apt-get install autoconf
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.13 m4'
@@ -154,12 +154,12 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
   win-prep-pacman:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'pacman -Syu --noconfirm --noprogressbar'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && pacman -Syu --noconfirm --noprogressbar'
           #  bash -l -c "pacman -Syu"
           #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
 
@@ -186,7 +186,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi -vv -I C:/Users/circleci/project'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && autoreconf-2.69 -fi -vv'
           #  C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project
           #shell: bash.exe
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project'
@@ -204,7 +204,7 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c './configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl'
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && ./configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl'
           #shell: bash.exe
   win-compile:
     steps:
