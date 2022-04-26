@@ -32,7 +32,7 @@ trigger:
 pr:
   branches:
     include:
-    - 'master'
+    - '*/ci'
 
 stages:
 
@@ -76,10 +76,10 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && ./buildconf && ./configure $(configure)"
       displayName: 'configure $(name)'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 && make V=1 examples && cd tests && make V=1"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1"
       displayName: 'compile'
-    #  env:
-    #    MAKEFLAGS: "-j 2"
+      env:
+        MAKEFLAGS: "-j 2"
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;"
       displayName: 'install'
