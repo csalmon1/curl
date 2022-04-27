@@ -186,13 +186,9 @@ commands:
     steps:
       - run:
           command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -v'
-          #  C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project
-          #shell: bash.exe
-          #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf-2.69 -fi -vv --include=C:/Users/circleci/project'
-          #  C:\tools\msys64\usr\bin\sh -l -c 'C:/tools/msys64/usr/bin/autoreconf -fi'
-          #  ./buildconf.bat
-          #shell: bash.exe
+            C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -v
+          shell: bash.exe
+          #  C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -v'
           #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
   win-configure4:
     steps:
