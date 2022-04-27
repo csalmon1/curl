@@ -231,6 +231,27 @@ commands:
       - run:
           command: ..\builds\libcurl-vc15-x64-%PATHPART%-dll-ssl-dll-ipv6-sspi\bin\curl.exe -V
 
+  win-dkr-tls:
+    steps:
+      - run:
+          command: |
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; -Confirm:$false
+          shell: powershell.exe
+
+  win-dkr-pkgmgr:
+    steps:
+      - run:
+          command: |
+            Install-Module -Name DockerMsftProvider -Repository PSGallery -Force -Confirm:$false
+          shell: powershell.exe
+
+  win-dkr-install:
+    steps:
+      - run:
+          command: |
+            Install-Package -Name docker -ProviderName DockerMsftProvider -Confirm:$false
+          shell: powershell.exe
+
   gettags:
     steps:
       - run:
@@ -398,17 +419,25 @@ jobs:
       - win-view
 
   win64-openssl-dkr:
-    docker:
-      - image: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+    executor:
+      name: win/default
+      size: "medium"
+      shell: bash.exe
     steps:
     #  - checkout
     #  - win-build
     #  - win-prep-choco
+      - win-dkr-tls
+      - win-dkr-pkgmgr
+      - win-dkr-install
       - win-prepare
       - win-configure
       - win-compile
       - win-install
       - win-view
+
+    #docker:
+    #  - image: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
 
   no-verbose:
     executor: ubuntu
@@ -494,7 +523,8 @@ workflows:
 
   win-basic:
     jobs:
-      - win64-openssl
+      - win64-openssl-dkr
+    #  - win64-openssl
 
 #  openssl-c-ares:
 #    jobs:
