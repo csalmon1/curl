@@ -431,10 +431,10 @@ jobs:
       - win-dkr-pkgmgr
       - win-dkr-install
       - win-prepare
-      - win-configure
-      - win-compile
-      - win-install
-      - win-view
+    #  - win-configure
+    #  - win-compile
+    #  - win-install
+    #  - win-view
 
     #docker:
     #  - image: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
