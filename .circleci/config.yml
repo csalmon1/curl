@@ -378,7 +378,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: cmd.exe
+      shell: powershell.exe
     steps:
       - checkout
     #  - win-build
