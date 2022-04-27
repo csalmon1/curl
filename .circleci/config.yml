@@ -131,7 +131,7 @@ commands:
       - run:
           command: |
             refreshenv
-          shell: powershell.exe
+          #shell: powershell.exe
   win-prepare:
     steps:
       - run:
