@@ -69,6 +69,9 @@ stages:
       env:
         MSYS2_PATH_TYPE: inherit
     steps:
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && ls"
+      displayName: 'view'
+      
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && $(prepare)"
       displayName: 'prepare'
       condition: variables.prepare
@@ -85,8 +88,8 @@ stages:
       displayName: 'install'
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;"
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && ls build"
-      displayName: 'view'
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && ls"
+      displayName: 'view2'
 
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 test-ci"
     #  displayName: 'test'
