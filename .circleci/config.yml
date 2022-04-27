@@ -130,8 +130,9 @@ commands:
     steps:
       - run:
           command: |
-            refreshenv
+            Restart-Computer -Force
           shell: powershell.exe
+          #   refreshenv
   win-prepare:
     steps:
       - run:
