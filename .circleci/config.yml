@@ -131,8 +131,7 @@ commands:
       - run:
           command: |
             refreshenv
-          #  call RefreshEnv.cmd
-          #shell: cmd.exe
+          shell: powershell.exe
   win-prepare:
     steps:
       - run:
@@ -374,7 +373,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: powershell.exe
+      shell: cmd.exe
     steps:
       - checkout
     #  - win-build
