@@ -409,8 +409,14 @@ jobs:
       - win-prep-shell
       - win-prep-pacman
       - win-prepare
+      - win-prep-pacman2
+      - win-prep-shell
       - win-prepare2
+      - win-prep-pacman2
+      - win-prep-shell
       - win-prepare3
+      - win-prep-pacman2
+      - win-prep-shell
       - win-prep-pip
       - win-prep-shell
       - win-configure1
