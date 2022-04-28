@@ -74,20 +74,23 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && mkdir -p ../build"
       displayName: 'view'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && mkdir -p ../bac && cd ../bac && git init"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd ../ && git clone git@github.com:csalmon1/BAC.git && cd BAC && ls"
       displayName: 'switch'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git remote add origin https://github.com/csalmon1/BAC && git config gc.auto 0 && git config --get-all http.https://github.com/csalmon1/BAC.extraheader && git config --get-all http.extraheader"
-      displayName: 'switch2'
+    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && mkdir -p ../bac && cd ../bac && git init"
+    #   displayName: 'switch'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git config --get-regexp .*extraheader && git config --get-all http.proxy && git config http.version HTTP/1.1"
-      displayName: 'switch3'
+    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git remote add origin https://github.com/csalmon1/BAC && git config gc.auto 0 && git config --get-all http.https://github.com/csalmon1/BAC.extraheader && git config --get-all http.extraheader"
+    #   displayName: 'switch2'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git fetch --force --tags --prune --prune-tags --progress --no-recurse-submodules origin"
-      displayName: 'switch4'
+    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git config --get-regexp .*extraheader && git config --get-all http.proxy && git config http.version HTTP/1.1"
+    #   displayName: 'switch3'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd ../s"
-      displayName: 'switch5'
+    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git fetch --force --tags --prune --prune-tags --progress --no-recurse-submodules origin"
+    #   displayName: 'switch4'
+
+    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd ../s"
+    #   displayName: 'switch5'
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git checkout tags/$(git_tag)"
       displayName: 'getTag'
