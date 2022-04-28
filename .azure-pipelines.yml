@@ -52,6 +52,7 @@ stages:
       container_cmd: ''
       configure: ''
       tests: ''
+      tag: ''
     timeoutInMinutes: 120
     pool:
       vmImage: 'windows-2019'
@@ -64,6 +65,7 @@ stages:
           prepare: pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl && python3 -m pip install --prefer-binary impacket
           configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/circleci/build --enable-debug --enable-werror --with-libssh2 --with-openssl
           tests: "~571"
+          git_tag: curl-7_81_0
     container:
       image: $(container_img)
       env:
@@ -71,6 +73,9 @@ stages:
     steps:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && mkdir -p ../build"
       displayName: 'view'
+
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git checkout tags/$(git_tag)"
+      displayName: 'getTag'
       
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && $(prepare)"
       displayName: 'prepare'
@@ -96,6 +101,9 @@ stages:
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && ls ../build"
       displayName: 'view4'
+
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd ../ && git clone git@github.com:csalmon1/BAC.git && cd BAC && ls"
+      displayName: 'switch'
 
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 test-ci"
     #  displayName: 'test'
