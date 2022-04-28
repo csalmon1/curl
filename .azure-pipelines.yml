@@ -69,7 +69,7 @@ stages:
       env:
         MSYS2_PATH_TYPE: inherit
     steps:
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && sudo mkdir -p build && ls"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && mkdir -p build && ls"
       displayName: 'view'
       
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && $(prepare)"
