@@ -158,6 +158,11 @@ commands:
             C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -Syu --noconfirm --noprogressbar'
           #  bash -l -c "pacman -Syu"
           #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
+  win-prep-pacman2:
+    steps:
+      - run:
+          command: |
+            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -Suu --noconfirm --noprogressbar'
 
   win-prep-pip:
     steps:
@@ -170,7 +175,7 @@ commands:
     steps:
       - run:
           command: |
-            ls ../
+            pwd
           shell: bash.exe
   win-configure2:
     steps:
@@ -408,9 +413,11 @@ jobs:
       - win-prepare3
       - win-prep-pip
       - win-prep-shell
+      - win-configure1
       - win-configure2
-    #  - win-configure3
-      - win-configure4
+      - win-prep-pacman2
+      - win-configure3
+    #  - win-configure4
       - win-configure2
       - win-prep-msys2
     #  - win-configure4
