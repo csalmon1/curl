@@ -247,15 +247,29 @@ commands:
     steps:
       - run:
           command: |
-            Install-Module -Name DockerMsftProvider -Repository PSGallery -Force -Confirm:$false
+            Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
           shell: powershell.exe
 
   win-dkr-install:
     steps:
       - run:
           command: |
-            Install-Package -Name docker -ProviderName DockerMsftProvider -Confirm:$false
+            Install-Package -Name docker -ProviderName DockerMsftProvider
           shell: powershell.exe
+
+  win-dkr-pull:
+    steps:
+      - run:
+          command: |
+            docker pull ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+          shell: bash.exe
+
+  win-dkr-run:
+    steps:
+      - run:
+          command: |
+            docker run ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+          shell: bash.exe
 
   gettags:
     steps:
@@ -436,7 +450,7 @@ jobs:
     executor:
       name: win/default
       size: "medium"
-      shell: bash.exe
+      shell: cmd.exe
     steps:
     #  - checkout
     #  - win-build
@@ -444,6 +458,8 @@ jobs:
       - win-dkr-tls
       - win-dkr-pkgmgr
       - win-dkr-install
+      - win-dkr-pull
+      - win-dkr-run
       - win-prepare
     #  - win-configure
     #  - win-compile
@@ -537,8 +553,8 @@ workflows:
 
   win-basic:
     jobs:
-      - win64-openssl
-    #  - win64-openssl-dkr
+    #  - win64-openssl
+      - win64-openssl-dkr
 
 #  openssl-c-ares:
 #    jobs:
