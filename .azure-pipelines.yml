@@ -80,13 +80,6 @@ stages:
       env:
         MSYS2_PATH_TYPE: inherit
     steps:
-    - bash: |
-        which bash
-        echo Hello $name
-      displayName: Multiline Bash script
-      env:
-        name: Microsoft
-
     - checkout: self   # self represents the repo where the initial Pipelines YAML file was found
     - checkout: myBAC  # this repo is defined in resources above
 
@@ -122,16 +115,8 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls $(build_config)"
       displayName: 'view4'
 
-    - bash: |
-        cd $(Agent.BuildDirectory) && ls
-        cd BAC && ls
-        git checkout -b tag$(git_tag)
-        git add $(build_config)/*
-        git commit -m "Moving artifacts from $(git_tag) to BAC repo [skip ci]"
-        git push origin tag$(git_tag)
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git checkout -b tag$(git_tag) && git add $(build_config)/* && git commit -F msgHack.txt && git push origin tag$(git_tag)"
       displayName: 'save'
-      env:
-        name: Microsoft
 
 
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 test-ci"
