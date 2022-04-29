@@ -34,6 +34,13 @@ pr:
     include:
     - '*/ci'
 
+resources:
+  repositories:
+  - repository: myBAC # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: csalmon1
+    name: csalmon1/BAC
+
 stages:
 
 ##########################################
@@ -73,7 +80,7 @@ stages:
     steps:
     - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
 
-    - checkout: git://csalmon1/BAC
+    - checkout: myBAC
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && mkdir -p ../build"
       displayName: 'view'
