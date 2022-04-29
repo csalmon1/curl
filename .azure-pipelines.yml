@@ -83,6 +83,9 @@ stages:
     - checkout: self   # self represents the repo where the initial Pipelines YAML file was found
     - checkout: myBAC  # this repo is defined in resources above
 
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git config user.email "csalmon@oceanit.com" && git config user.name "csalmon""
+      displayName: 'git_config'
+
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && cd BAC && mkdir -p $(build_config) && ls"
       displayName: 'view'
 
@@ -115,8 +118,11 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls $(build_config)"
       displayName: 'view4'
 
+    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git config user.email "csalmon@oceanit.com" && git config user.name "csalmon""
+    #   displayName: 'git_config'
+
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git checkout -b tag$(git_tag) && git add $(build_config)/* && git commit -F msgHack.txt && git push origin tag$(git_tag)"
-      displayName: 'save'
+      displayName: 'git_push'
 
 
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 test-ci"
