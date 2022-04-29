@@ -496,7 +496,10 @@ workflows:
 
   win-basic:
     jobs:
-      - win64-openssl
+      - win64-openssl:
+          filters:
+            branches:
+              ignore: azure/ci
 
 #  openssl-c-ares:
 #    jobs:
