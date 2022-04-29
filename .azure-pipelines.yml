@@ -86,7 +86,7 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && cd BAC && mkdir -p $(build_config) && ls"
       displayName: 'view'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && git checkout tags/$(git_tag)"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && git checkout tags/$(git_tag)"
       displayName: 'getTag'
       
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && $(prepare)"
