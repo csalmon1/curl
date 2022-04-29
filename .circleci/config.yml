@@ -554,7 +554,11 @@ workflows:
   win-basic:
     jobs:
     #  - win64-openssl
-      - win64-openssl-dkr
+      - win64-openssl-dkr:
+          filters:
+            branches:
+              ignore: azure/ci
+
 
 #  openssl-c-ares:
 #    jobs:
