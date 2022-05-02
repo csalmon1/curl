@@ -74,7 +74,7 @@ stages:
           configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --with-libssh2 --with-openssl
           tests: "~571"
           git_tag: curl-7_81_0
-          build_config: mingw64_debug_openssl_libssh2
+          build_config: win64_debug_openssl_libssh2_mingw64
     container:
       image: $(container_img)
       env:
@@ -83,13 +83,7 @@ stages:
     - checkout: self   # self represents the repo where the initial Pipelines YAML file was found
     - checkout: myBAC  # this repo is defined in resources above
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls && ./git_artifacts $(build_config)"
-      displayName: 'git_push'
-
-    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git config user.email "csalmon@oceanit.com" && git config user.name "csalmon""
-    #   displayName: 'git_config'
-
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && cd BAC && mkdir -p $(build_config) && ls"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && cd BAC && mkdir -p $(git_tag)-$(build_config) && ls"
       displayName: 'view'
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && git checkout tags/$(git_tag)"
@@ -115,20 +109,14 @@ stages:
     - script: $(container_cmd) -l -c "cd C:/Users/azure/build && pwd && ls"
       displayName: 'view2'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && mv C:/Users/azure/build/* $(build_config)"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && mv C:/Users/azure/build/* $(git_tag)-$(build_config)"
       displayName: 'view3'
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls $(build_config)"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls $(git_tag)-$(build_config)"
       displayName: 'view4'
 
-    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git config user.email "csalmon@oceanit.com" && git config user.name "csalmon""
-    #   displayName: 'git_config'
-
-    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git checkout -b tag$(git_tag) && git add $(build_config)/* && git commit -F msgHack.txt && git push origin tag$(git_tag)"
-    #   displayName: 'git_push'
-
-    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ./git_artifacts"
-    #   displayName: 'git_push'
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls && ./git_artifacts $(git_tag)-$(build_config)"
+      displayName: 'git_push'
 
 
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 test-ci"
