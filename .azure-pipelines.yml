@@ -83,7 +83,7 @@ stages:
     - checkout: self   # self represents the repo where the initial Pipelines YAML file was found
     - checkout: myBAC  # this repo is defined in resources above
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ./git_artifacts"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls && ./git_artifacts"
       displayName: 'git_push'
 
     # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && git config user.email "csalmon@oceanit.com" && git config user.name "csalmon""
