@@ -155,6 +155,7 @@ stages:
 
     - script: |
         echo "Collecting build artifacts from dir: $(git_tag)-$(build_config)"
+        cd BAC
         git config --global user.email "csalmon@oceanit.com"
         git config --global user.name "csalmon1"
         git checkout -b artifacts_$(git_tag)-$(build_config)
