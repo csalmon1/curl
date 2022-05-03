@@ -33,15 +33,27 @@ commands:
             ./buildconf
             SW_ED="openssl"
             echo "sw_editon: ${SW_ED}"
-            ./configure --enable-warnings --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
+            COMP_ARG="--enable-warnings --enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            ./configure ${COMP_ARG} --with-${SW_ED} --prefix=/home/circleci/build
             echo 'export SW_ED="openssl"' >> $BASH_ENV
             echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--enable-warnings --enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
   configure-openssl-no-verbose:
     steps:
       - run:
           command: |
             ./buildconf
-            ./configure --disable-verbose --enable-werror --with-${SW_ED} --prefix=/home/circleci/build
+            SW_ED="openssl"
+            echo "sw_editon: ${SW_ED}"
+            COMP_ARG="--disable-verbose --enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            ./configure ${COMP_ARG} --with-${SW_ED} --prefix=/home/circleci/build
+            echo 'export SW_ED="openssl"' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--disable-verbose --enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
   configure-no-proxy:
     steps:
       - run:
@@ -102,174 +114,19 @@ commands:
             ./buildconf
             SW_ED="wolfssl"
             echo "sw_editon: ${SW_ED}"
-            LDFLAGS="-Wl,-rpath,$HOME/wssh/lib" ./configure --enable-warnings --enable-werror --with-${SW_ED}=$HOME/wssl --with-wolfssh=$HOME/wssh --prefix=/home/circleci/build
+            COMP_ARG="--enable-warnings --enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            LDFLAGS="-Wl,-rpath,$HOME/wssh/lib" ./configure ${COMP_ARG} --with-${SW_ED}=$HOME/wssl --with-wolfssh=$HOME/wssh --prefix=/home/circleci/build
             echo 'export SW_ED="wolfssl"' >> $BASH_ENV
             echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--enable-warnings --enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
   configure-cares-debug:
     steps:
       - run:
           command: |
             ./buildconf
             ./configure --enable-debug --enable-werror --with-openssl --enable-ares
-
-  win-prep-choco:
-    steps:
-      - run:
-          command: |
-            choco install -y msys2
-  win-prep-msys2:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'ls C:/tools/msys64/usr/bin'
-          #  choco upgrade --no-progress -y msys2
-          #  curl -LO https://github.com/msys2/msys2-installer/releases/download/2022-03-19/msys2-x86_64-20220319.exe
-          #  ./msys2-x86_64-20220319.exe
-          #  choco install msys2 --params "/NoUpdate /InstallDir:C:\msys64"
-  win-prep-shell:
-    steps:
-      - run:
-          command: |
-            refreshenv
-          #shell: powershell.exe
-  win-prepare:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl'
-  win-prepare2:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -S --needed --noconfirm --noprogressbar automake pkg-config libtool perl groff'
-          #  apt-get install autoconf
-          #shell: bash.exe
-          #  C:\tools\msys64\usr\bin\sh -l -c 'pacman -S --needed --noconfirm --noprogressbar autoconf2.13 m4'
-  win-prepare3:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -S --needed --noconfirm --noprogressbar autoconf2.69 m4'
-          #  autoconf2.69
-  win-prep-pacman:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -Syu --noconfirm --noprogressbar'
-          #  bash -l -c "pacman -Syu"
-          #  C:\tools\msys64\usr\bin\sh -l -c "pacman -Syu"
-  win-prep-pacman2:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:\tools\msys64\usr\bin\pacman -Suu --noconfirm --noprogressbar'
-
-  win-prep-pip:
-    steps:
-      - run:
-          command: |
-            python -m pip install --prefer-binary impacket
-          #  C:\tools\msys64\usr\bin\sh -l -c 'python -m pip install --prefer-binary impacket'
-          shell: bash.exe
-  win-configure1:
-    steps:
-      - run:
-          command: |
-            pwd
-          shell: bash.exe
-  win-configure2:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'ls C:/Users/circleci/project'
-          #shell: bash.exe
-  win-configure3:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -v'
-          #  C:/tools/msys64/usr/bin/autoreconf-2.69 -fi -v
-          #shell: bash.exe
-          #  C:\tools\msys64\usr\bin\sh -l -c 'autoreconf -fi && ./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32 --prefix=/build/mingw32 --enable-debug --enable-werror --with-libssh2 --with-openssl'
-  win-configure4:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && sh buildconf'
-          #  ./buildconf
-          #shell: bash.exe  
-          #  C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && ./buildconf'
-          #shell: bash.exe
-  win-configure5:
-    steps:
-      - run:
-          command: |
-            C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && sh configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh2 --with-openssl'
-          #shell: bash.exe
-  win-compile:
-    steps:
-      - run:
-          command: |
-            echo compile && C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && make V=1'
-            
-  win-install:
-    steps:
-      - run:
-          command: |
-            echo install && C:\tools\msys64\usr\bin\sh -l -c 'cd C:/Users/circleci/project && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;'
-  
-  win-view:
-    steps:
-      - run:
-          command: |
-            dir &&
-            dir \build\mingw32
-
-  win-build:
-    steps:
-      - run:
-          command: call buildconf.bat
-      - run:
-          command: cd winbuild
-      - run:
-          command: nmake /f Makefile.vc mode=dll VC=15 "SSL_PATH=C:\OpenSSL-v111-Win64" WITH_SSL=dll MACHINE=x64 DEBUG=%DEBUG% ENABLE_UNICODE=%ENABLE_UNICODE%
-      - run:
-          command: ..\builds\libcurl-vc15-x64-%PATHPART%-dll-ssl-dll-ipv6-sspi\bin\curl.exe -V
-
-  win-dkr-tls:
-    steps:
-      - run:
-          command: |
-            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
-          shell: powershell.exe
-
-  win-dkr-pkgmgr:
-    steps:
-      - run:
-          command: |
-            Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
-          shell: powershell.exe
-
-  win-dkr-install:
-    steps:
-      - run:
-          command: |
-            Install-Package -Name docker -ProviderName DockerMsftProvider
-          shell: powershell.exe
-
-  win-dkr-pull:
-    steps:
-      - run:
-          command: |
-            docker pull ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
-          shell: bash.exe
-
-  win-dkr-run:
-    steps:
-      - run:
-          command: |
-            docker run ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
-          shell: bash.exe
 
   gettags:
     steps:
@@ -287,28 +144,6 @@ commands:
             sudo make install
             pwd
             echo "my TAG" $TAG
-  deploy:
-    steps:          
-      - run:
-          command: |
-            git remote set-url --push origin git@github.com:csalmon1/BAC.git
-            git config user.email "csalmon@oceanit.com"
-            git config user.name "csalmon"
-            git symbolic-ref HEAD refs/heads/tag${TAG}
-            rm .git/index
-            git clean -fdx
-            dirname="${TAG}x86ubuntuopensslgcc"
-            sudo mkdir -p $dirname
-            echo "Directory name:" $dirname
-            #sudo mv ../artifacts.tar.gz curl/x86/ubuntu/$CIRCLE_TAG/openssl
-            sudo mv /home/circleci/build/* $dirname
-            git add ${dirname}/*
-            git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
-            git push origin tag${TAG}
-            echo "my TAG" $TAG
-
-      #- store_artifacts:
-      #    path: artifacts.tar.gz
 
   bac-deploy:
     steps:          
@@ -344,12 +179,12 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_55_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_72_0"' >> $BASH_ENV
             echo 'export PLAT="x86"' >> $BASH_ENV
             echo 'export OS="ubuntu"' >> $BASH_ENV
             echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
             echo 'export SW_ED="openssl"' >> $BASH_ENV
-            echo 'export COMP_ARG="noverb"' >> $BASH_ENV
+            echo 'export COMP_ARG="--enable-warnings --enable-werror"' >> $BASH_ENV
             echo 'export COMP="gcc"' >> $BASH_ENV
   verify:
     steps:
@@ -409,65 +244,6 @@ jobs:
       - describe
       - bac-deploy
 #      - test
-
-  win64-openssl:
-    executor:
-      name: win/default
-      size: "medium"
-      shell: cmd.exe
-    steps:
-      - checkout
-    #  - win-build
-      - win-prep-choco
-      - win-prep-msys2
-      - win-prep-shell
-      - win-prep-pacman
-      - win-prepare
-      - win-prep-pacman2
-      - win-prep-shell
-      - win-prepare2
-      - win-prep-pacman2
-      - win-prep-shell
-      - win-prepare3
-      - win-prep-pacman2
-      - win-prep-shell
-      - win-prep-pip
-      - win-prep-shell
-      - win-configure1
-      - win-configure2
-      - win-prep-pacman2
-      - win-configure3
-    #  - win-configure4
-      - win-configure2
-      - win-prep-msys2
-    #  - win-configure4
-      - win-configure5
-      - win-compile
-      - win-install
-      - win-view
-
-  win64-openssl-dkr:
-    executor:
-      name: win/default
-      size: "medium"
-      shell: cmd.exe
-    steps:
-    #  - checkout
-    #  - win-build
-    #  - win-prep-choco
-      - win-dkr-tls
-      - win-dkr-pkgmgr
-      - win-dkr-install
-      - win-dkr-pull
-      - win-dkr-run
-      - win-prepare
-    #  - win-configure
-    #  - win-compile
-    #  - win-install
-    #  - win-view
-
-    #docker:
-    #  - image: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
 
   no-verbose:
     executor: ubuntu
@@ -547,18 +323,17 @@ jobs:
       - test
 
 workflows:
-#  basic:
-#    jobs:
-#      - x86-openssl
-
-  win-basic:
+  basic:
     jobs:
-    #  - win64-openssl
-      - win64-openssl-dkr:
-          filters:
-            branches:
-              ignore: azure/ci
+      - x86-openssl
 
+  openssl-no-verbose:
+    jobs:
+      - no-verbose
+
+  wolfssl-wolfssh:
+    jobs:
+      - wolfssh
 
 #  openssl-c-ares:
 #    jobs:
@@ -571,14 +346,6 @@ workflows:
 #  openssl-no-proxy:
 #    jobs:
 #      - no-proxy
-
-#  openssl-no-verbose:
-#    jobs:
-#      - no-verbose
-
-#  wolfssl-wolfssh:
-#    jobs:
-#      - wolfssh
 
 #  arm-openssl:
 #    jobs:
