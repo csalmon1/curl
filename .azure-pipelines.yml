@@ -59,13 +59,13 @@ stages:
       container_cmd: ''
       configure: ''
       tests: ''
-      git_tag: ''
+      git_tag: 'curl-7_80_0'
       build_config: ''
-      plat: ''
-      os_desc: ''
+      plat: 'x86_64'
+      os_desc: 'windows'
       sw_ed: ''
-      comp_arg: ''
-      comp: ''
+      comp_arg: '--enable-debug --enable-werror'
+      comp: 'x86_64-w64-mingw32-gcc'
     timeoutInMinutes: 120
     pool:
       vmImage: 'windows-2019'
@@ -78,13 +78,22 @@ stages:
           prepare: pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl && python3 -m pip install --prefer-binary impacket
           configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --with-libssh2 --with-openssl
           tests: "~571"
-          git_tag: curl-7_82_0
+          #git_tag: curl-7_80_0
           build_config: win64_debug_openssl_libssh2_mingw64
-          plat: x86_64
-          os_desc: windows
+          #plat: x86_64
+          #os_desc: windows
           sw_ed: --with-libssh2 --with-openssl
-          comp_arg: --enable-debug --enable-werror
-          comp: x86_64-w64-mingw32-gcc
+          #comp_arg: --enable-debug --enable-werror
+          #comp: x86_64-w64-mingw32-gcc
+        msys2_mingw64_debug_libssh:
+          name: 64-bit OpenSSL/libssh
+          container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+          container_cmd: C:\msys64\usr\bin\sh
+          prepare: pacman -S --needed --noconfirm --noprogressbar libssh-devel mingw-w64-x86_64-libssh
+          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh --with-openssl
+          tests: "~571 ~614"
+          build_config: win64_debug_openssl_libssh_mingw64
+          sw_ed: --with-libssh --with-openssl
     container:
       image: $(container_img)
       env:
@@ -95,19 +104,8 @@ stages:
     - checkout: myBAC  # this repo is defined in resources above
       persistCredentials: true
 
-    # - script: |
-    #     cd BAC
-    #     git checkout -b main
-    #     git config --global user.name "csalmon1"
-    #     git config --global user.email "csalmon@oceanit.com"
-    #     echo 'This is a test' > data.txt
-    #     git add -A
-    #     git commit -m "deployment $(Build.BuildNumber)"
-    #     git push --set-upstream origin main
-    #   displayName: Add data.txt file
-
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && cd BAC && mkdir -p $(git_tag)-$(build_config) && ls"
-      displayName: 'view'
+      displayName: 'view and mkdir'
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && git checkout tags/$(git_tag)"
       displayName: Checkout tagged version
@@ -130,8 +128,6 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && ls && mv config.log ../BAC/$(git_tag)-$(build_config)"
       displayName: Copy config log to artifacts dir
 
-    #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 install && PATH=/usr/bin:/bin find . -type f -path '*/.libs/*.exe' -print -execdir mv -t .. {} \;"
-
     - script: $(container_cmd) -l -c "cd C:/Users/azure/build && pwd && ls"
       displayName: Check artifacts
 
@@ -144,11 +140,11 @@ stages:
         echo "vendor: the curl project" >> description.txt
         echo "product: libcurl" >> description.txt
         echo "version:" $(git_tag) >> description.txt
-        echo "target_hw: $(plat)" >> description.txt
-        echo "target_sw: $(os_desc)" >> description.txt
-        echo "sw_edition: $(sw_ed)" >> description.txt
-        echo "compiler arg: $(comp_arg)" >> description.txt
-        echo "compiler: $(comp)" >> description.txt
+        echo "target_hw:" $(plat) >> description.txt
+        echo "target_sw:" $(os_desc) >> description.txt
+        echo "sw_edition:" $(sw_ed) >> description.txt
+        echo "compiler arg:" $(comp_arg) >> description.txt
+        echo "compiler:" $(comp) >> description.txt
         echo "Azure job name:" $(name) >> description.txt
         echo "Azure job number:" $(Build.BuildNumber) >> description.txt
       displayName: Generate description file
@@ -163,9 +159,6 @@ stages:
         git commit -m "Deployment $(Build.BuildNumber) moving $(git_tag)-$(build_config) artifacts to BAC repo [skip ci]"
         git push origin artifacts_$(git_tag)-$(build_config)
       displayName: Push artifacts to BAC repo
-
-    # - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls && ./git_artifacts $(git_tag)-$(build_config)"
-    #   displayName: 'git_push'
 
     #- script: $(container_cmd) -l -c "cd $(echo '%cd%') && make V=1 test-ci"
     #  displayName: 'test'
