@@ -80,11 +80,11 @@ stages:
           tests: "~571"
           git_tag: curl-7_82_0
           build_config: win64_debug_openssl_libssh2_mingw64
-          plat: x86-64
+          plat: x86_64
           os_desc: windows
           sw_ed: --with-libssh2 --with-openssl
           comp_arg: --enable-debug --enable-werror
-          comp: mingw64
+          comp: x86_64-w64-mingw32-gcc
     container:
       image: $(container_img)
       env:
@@ -140,7 +140,6 @@ stages:
 
     - script: |
         cd BAC/$(git_tag)-$(build_config)
-        ls
         echo "Binary Artifact Description" >> description.txt
         echo "vendor: the curl project" >> description.txt
         echo "product: libcurl" >> description.txt
