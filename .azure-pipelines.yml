@@ -81,7 +81,19 @@ stages:
         MSYS2_PATH_TYPE: inherit
     steps:
     - checkout: self   # self represents the repo where the initial Pipelines YAML file was found
+      persistCredentials: true
     - checkout: myBAC  # this repo is defined in resources above
+      persistCredentials: true
+
+    - script: |
+        cd BAC
+        git config --global user.name "csalmon1"
+        git config --global user.email "csalmon@oceanit.com"
+        echo 'This is a test' > data.txt
+        git add -A
+        git commit -m "deployment $(Build.BuildNumber)"
+        git push --set-upstream origin main
+      displayName: Add data.txt file
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && pwd && ls && cd BAC && mkdir -p $(git_tag)-$(build_config) && ls"
       displayName: 'view'
