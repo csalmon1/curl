@@ -87,6 +87,7 @@ stages:
 
     - script: |
         cd BAC
+        git checkout -b main
         git config --global user.name "csalmon1"
         git config --global user.email "csalmon@oceanit.com"
         echo 'This is a test' > data.txt
