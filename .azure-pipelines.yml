@@ -59,7 +59,7 @@ stages:
       container_cmd: ''
       configure: ''
       tests: ''
-      git_tag: 'curl-7_80_0'
+      git_tag: 'curl-7_82_0'
       build_config: ''
       plat: 'x86_64'
       os_desc: 'windows'
@@ -71,26 +71,26 @@ stages:
       vmImage: 'windows-2019'
     strategy:
       matrix:
-        msys2_mingw64_debug_openssl:
-          name: 64-bit OpenSSL/libssh2
-          container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
-          container_cmd: C:\msys64\usr\bin\sh
-          prepare: pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl && python3 -m pip install --prefer-binary impacket
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --with-libssh2 --with-openssl
-          tests: "~571"
-          #git_tag: curl-7_80_0
-          build_config: win64_debug_openssl_libssh2_mingw64
-          #plat: x86_64
-          #os_desc: windows
-          sw_ed: --with-libssh2 --with-openssl
-          #comp_arg: --enable-debug --enable-werror
-          #comp: x86_64-w64-mingw32-gcc
+        # msys2_mingw64_debug_openssl:
+        #   name: 64-bit OpenSSL/libssh2
+        #   container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+        #   container_cmd: C:\msys64\usr\bin\sh
+        #   prepare: pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl && python3 -m pip install --prefer-binary impacket
+        #   configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --with-libssh2 --with-openssl
+        #   tests: "~571"
+        #   #git_tag: curl-7_80_0
+        #   build_config: win64_debug_openssl_libssh2_mingw64
+        #   #plat: x86_64
+        #   #os_desc: windows
+        #   sw_ed: --with-libssh2 --with-openssl
+        #   #comp_arg: --enable-debug --enable-werror
+        #   #comp: x86_64-w64-mingw32-gcc
         msys2_mingw64_debug_libssh:
           name: 64-bit OpenSSL/libssh
           container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
           container_cmd: C:\msys64\usr\bin\sh
           prepare: pacman -S --needed --noconfirm --noprogressbar libssh-devel mingw-w64-x86_64-libssh
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=/mingw64 --enable-debug --enable-werror --with-libssh --with-openssl
+          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --with-libssh --with-openssl
           tests: "~571 ~614"
           build_config: win64_debug_openssl_libssh_mingw64
           sw_ed: --with-libssh --with-openssl
