@@ -155,7 +155,12 @@ commands:
             git checkout -b tag${TAG}-${SW_ED}
             git config user.email "csalmon@oceanit.com"
             git config user.name "csalmon"
-            dirname="${TAG}-${PLAT}${OS}${SW_ED}${COMP_ARG}${COMP}"
+            desc=""
+            if [${COMP_ARG} = "--disable-verbose --enable-werror"]
+            then
+              desc="noverb"
+            fi
+            dirname="${TAG}-${PLAT}${OS}${SW_ED}${desc}${COMP}"
             sudo mkdir -p $dirname
             echo "Directory name:" $dirname
             sudo mv /home/circleci/build/* $dirname
