@@ -139,6 +139,8 @@ stages:
       displayName: Move artifacts
 
     - script: |
+        cd BAC/$(git_tag)-$(build_config)
+        ls
         echo "Binary Artifact Description" >> description.txt
         echo "vendor: the curl project" >> description.txt
         echo "product: libcurl" >> description.txt
@@ -150,7 +152,6 @@ stages:
         echo "compiler: $(comp)" >> description.txt
         echo "Azure job name:" $(name) >> description.txt
         echo "Azure job number:" $(Build.BuildNumber) >> description.txt
-        mv description.txt BAC/$(git_tag)-$(build_config)
       displayName: Generate description file
 
     - script: |
