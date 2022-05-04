@@ -153,13 +153,13 @@ commands:
             git clone git@github.com:csalmon1/BAC.git
             cd BAC
             desc=""
-            if [${COMP_ARG} = "--disable-verbose --enable-werror"]
+            if [[ "$COMP_ARG" == "--disable-verbose --enable-werror" ]]
             then
               desc="noverb"
-            elif [${COMP_ARG} = "--enable-debug --enable-werror"]
+            elif [[ "$COMP_ARG" == "--enable-debug --enable-werror" ]]
             then
               desc="debug"
-            elif [${COMP_ARG} = "--enable-warnings --enable-werror"]
+            elif [[ "$COMP_ARG" == "--enable-warnings --enable-werror" ]]
             then
               desc="warn"
             fi
@@ -190,7 +190,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_81_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_80_0"' >> $BASH_ENV
             echo 'export PLAT="x86"' >> $BASH_ENV
             echo 'export OS="ubuntu"' >> $BASH_ENV
             echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
