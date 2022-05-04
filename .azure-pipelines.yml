@@ -98,27 +98,27 @@ stages:
           name: 64-bit w/o zlib
           container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
           container_cmd: C:\MinGW\msys\1.0\bin\sh
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --without-zlib --without-ssl
+          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --enable-werror --without-zlib --without-ssl
           tests: "!203 !1143"
           build_config: win64_debug_nozlib_nossl_mingw64
           sw_ed: --without-zlib --without-ssl
-        msys2_mingw64_debug_schannel:
-          name: 64-bit Schannel/SSPI/WinIDN/libssh2
-          container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
-          container_cmd: C:\msys64\usr\bin\sh
-          prepare: pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl && python3 -m pip install --prefer-binary impacket
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --enable-sspi --with-schannel --with-winidn --with-libssh2
-          tests: "~571"
-          build_config: win64_debug_sspi_schannel_winidn_libssh2_mingw64
-          sw_ed: --enable-sspi --with-schannel --with-winidn --with-libssh2
-        msys1_mingw64_debug_schannel:
-          name: 64-bit Schannel/SSPI/WinIDN w/o zlib
-          container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
-          container_cmd: C:\MinGW\msys\1.0\bin\sh
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build  --enable-debug --enable-werror --enable-sspi --with-schannel --with-winidn --without-zlib
-          tests: "!203 !1143"
-          build_config: win64_debug_sspi_schannel_winidn_nozlib_mingw64
-          sw_ed: --enable-sspi --with-schannel --with-winidn --without-zlib
+        # msys2_mingw64_debug_schannel:
+        #   name: 64-bit Schannel/SSPI/WinIDN/libssh2
+        #   container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+        #   container_cmd: C:\msys64\usr\bin\sh
+        #   prepare: pacman -S --needed --noconfirm --noprogressbar libssh2-devel mingw-w64-x86_64-libssh2 mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-wheel mingw-w64-x86_64-python-pyopenssl && python3 -m pip install --prefer-binary impacket
+        #   configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build --enable-debug --enable-werror --enable-sspi --with-schannel --with-winidn --with-libssh2
+        #   tests: "~571"
+        #   build_config: win64_debug_sspi_schannel_winidn_libssh2_mingw64
+        #   sw_ed: --enable-sspi --with-schannel --with-winidn --with-libssh2
+        # msys1_mingw64_debug_schannel:
+        #   name: 64-bit Schannel/SSPI/WinIDN w/o zlib
+        #   container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
+        #   container_cmd: C:\MinGW\msys\1.0\bin\sh
+        #   configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --prefix=C:/Users/azure/build  --enable-debug --enable-werror --enable-sspi --with-schannel --with-winidn --without-zlib
+        #   tests: "!203 !1143"
+        #   build_config: win64_debug_sspi_schannel_winidn_nozlib_mingw64
+        #   sw_ed: --enable-sspi --with-schannel --with-winidn --without-zlib
     container:
       image: $(container_img)
       env:
@@ -139,7 +139,7 @@ stages:
       displayName: 'prepare'
       condition: variables.prepare
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && ./buildconf && ./configure $(configure)"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && ./buildconf && ./configure $(configure) --prefix=/BAC/$(git_tag)-$(build_config)"
       displayName: 'configure $(name)'
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && make V=1"
@@ -153,11 +153,11 @@ stages:
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && ls && mv config.log ../BAC/$(git_tag)-$(build_config)"
       displayName: Copy config log to artifacts dir
 
-    - script: $(container_cmd) -l -c "cd C:/Users/azure/build && pwd && ls"
-      displayName: Check artifacts
+    # - script: $(container_cmd) -l -c "cd C:/Users/azure/build && pwd && ls"
+    #   displayName: Check artifacts
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && mv C:/Users/azure/build/* $(git_tag)-$(build_config) && ls $(git_tag)-$(build_config)"
-      displayName: Move artifacts
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd BAC && ls $(git_tag)-$(build_config)"
+      displayName: Check artifacts
 
     - script: |
         cd BAC/$(git_tag)-$(build_config)
