@@ -152,23 +152,29 @@ commands:
             cd ../
             git clone git@github.com:csalmon1/BAC.git
             cd BAC
-            git checkout -b tag${TAG}-${SW_ED}
-            git config user.email "csalmon@oceanit.com"
-            git config user.name "csalmon"
             desc=""
             if [${COMP_ARG} = "--disable-verbose --enable-werror"]
             then
               desc="noverb"
+            elif [${COMP_ARG} = "--enable-debug --enable-werror"]
+            then
+              desc="debug"
+            elif [${COMP_ARG} = "--enable-warnings --enable-werror"]
+            then
+              desc="warn"
             fi
-            dirname="${TAG}-${PLAT}${OS}${SW_ED}${desc}${COMP}"
-            sudo mkdir -p $dirname
-            echo "Directory name:" $dirname
-            sudo mv /home/circleci/build/* $dirname
-            git add ${dirname}/*
-            git commit -m "Moving artifacts from $TAG to BAC repo [skip ci]"
-            git push origin tag${TAG}-${SW_ED}
-            echo "my TAG" $TAG
-            echo "my SW_ED" $SW_ED
+            build_config="${TAG}-${PLAT}${OS}${SW_ED}_${desc}_${COMP}"
+            sudo mkdir -p ${build_config}
+            echo "Directory name:" ${build_config}
+            sudo mv /home/circleci/build/* ${build_config}
+            git checkout -b brnch_${build_config}
+            git config --global user.email "csalmon@oceanit.com"
+            git config --global user.name "csalmon1"
+            git add ${build_config}/*
+            git commit -m "Circleci deployment ${CIRCLE_BUILD_NUM}, moving artifacts from $TAG to BAC repo [skip ci]"
+            git push origin brnch_${build_config}
+            echo "my TAG" ${TAG}
+            echo "my SW_ED" ${SW_ED}
 
   aws-deploy:
     steps:          
@@ -184,7 +190,7 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_72_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_81_0"' >> $BASH_ENV
             echo 'export PLAT="x86"' >> $BASH_ENV
             echo 'export OS="ubuntu"' >> $BASH_ENV
             echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
@@ -216,8 +222,8 @@ commands:
             echo "sw_edition: ${SW_ED}" >> description.txt
             echo "compiler arg: ${COMP_ARG}" >> description.txt
             echo "compiler: ${COMP}" >> description.txt
-            echo "Circleci job name:" $CIRCLE_JOB >> description.txt
-            echo "Circleci job number:" $CIRCLE_BUILD_NUM >> description.txt
+            echo "Circleci job name:" ${CIRCLE_JOB} >> description.txt
+            echo "Circleci job number:" ${CIRCLE_BUILD_NUM} >> description.txt
             sudo mv description.txt /home/circleci/build
             sudo mv config.log /home/circleci/build
 
@@ -328,9 +334,9 @@ jobs:
       - test
 
 workflows:
-  basic:
-    jobs:
-      - x86-openssl
+#  basic:
+#    jobs:
+#      - x86-openssl
 
   openssl-no-verbose:
     jobs:
