@@ -139,7 +139,7 @@ stages:
       displayName: 'prepare'
       condition: variables.prepare
 
-    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && ./buildconf && ./configure $(configure) --prefix=/BAC/$(git_tag)-$(build_config)"
+    - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && ./buildconf && ./configure $(configure) --prefix=$(Agent.BuildDirectory)/BAC/$(git_tag)-$(build_config)"
       displayName: 'configure $(name)'
 
     - script: $(container_cmd) -l -c "cd $(echo '%cd%') && cd curl && make V=1"
