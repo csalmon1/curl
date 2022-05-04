@@ -59,7 +59,15 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --disable-proxy --enable-werror --with-openssl
+            SW_ED="openssl_noproxy"
+            echo "sw_editon: ${SW_ED}"
+            COMP_ARG="--enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            ./configure ${COMP_ARG} --disable-proxy --with-openssl --prefix=/home/circleci/build
+            echo 'export SW_ED="openssl_noproxy"' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
   install-cares:
     steps:
       - run:
@@ -80,7 +88,15 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --enable-warnings --enable-werror --with-openssl --with-libssh
+            SW_ED="openssl_libssh"
+            echo "sw_editon: ${SW_ED}"
+            COMP_ARG="--enable-warnings --enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            ./configure ${COMP_ARG} --with-openssl --with-libssh --prefix=/home/circleci/build
+            echo 'export SW_ED="openssl_libssh"' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--enable-warnings --enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
   install-wolfssl:
     steps:
       - run:
@@ -106,7 +122,15 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --enable-warnings --enable-werror --with-openssl --enable-ares
+            SW_ED="openssl_ares"
+            echo "sw_editon: ${SW_ED}"
+            COMP_ARG="--enable-warnings --enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            ./configure ${COMP_ARG} --with-openssl --enable-ares --prefix=/home/circleci/build
+            echo 'export SW_ED="openssl_ares"' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--enable-warnings --enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
   configure-wolfssh:
     steps:
       - run:
@@ -126,7 +150,15 @@ commands:
       - run:
           command: |
             ./buildconf
-            ./configure --enable-debug --enable-werror --with-openssl --enable-ares
+            SW_ED="openssl_ares"
+            echo "sw_editon: ${SW_ED}"
+            COMP_ARG="--enable-debug --enable-werror"
+            echo "comp_arg: ${COMP_ARG}"
+            ./configure ${COMP_ARG} --with-openssl --enable-ares --prefix=/home/circleci/build
+            echo 'export SW_ED="openssl_ares"' >> $BASH_ENV
+            echo "sw_editon: ${SW_ED}"
+            echo 'export COMP_ARG="--enable-debug --enable-werror"' >> $BASH_ENV
+            echo "comp_arg: ${COMP_ARG}"
 
   gettags:
     steps:
@@ -162,6 +194,9 @@ commands:
             elif [[ "$COMP_ARG" == "--enable-warnings --enable-werror" ]]
             then
               desc="warn"
+            elif [[ "$COMP_ARG" == "--enable-werror" ]]
+            then
+              desc="err"
             fi
             build_config="${TAG}-${PLAT}${OS}${SW_ED}_${desc}_${COMP}"
             sudo mkdir -p ${build_config}
@@ -190,13 +225,20 @@ commands:
     steps:
       - run:
           command: |
-            echo 'export TAG="curl-7_80_0"' >> $BASH_ENV
+            echo 'export TAG="curl-7_82_0"' >> $BASH_ENV
             echo 'export PLAT="x86"' >> $BASH_ENV
             echo 'export OS="ubuntu"' >> $BASH_ENV
-            echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
+            echo 'export OS_DESC="ubuntu-2004:202010-01"' >> $BASH_ENV
             echo 'export SW_ED="openssl"' >> $BASH_ENV
             echo 'export COMP_ARG="--enable-warnings --enable-werror"' >> $BASH_ENV
             echo 'export COMP="gcc"' >> $BASH_ENV
+  setvar_arm:
+    steps:
+      - run:
+          command: |
+            echo 'export PLAT="ARM"' >> $BASH_ENV
+            echo 'export OS_DESC="ubuntu-2004:202101-01"' >> $BASH_ENV
+
   verify:
     steps:
       - run:
@@ -290,27 +332,45 @@ jobs:
     steps:
       - checkout
       - install-deps
+      - setvar
+      - gettags
+      - verify
       - configure-no-proxy
+      - verify
       - build
-      - test
+      - describe
+      - bac-deploy
+#      - test
 
   cares:
     executor: ubuntu
     steps:
       - checkout
       - install-cares
+      - setvar
+      - gettags
+      - verify
       - configure-cares
+      - verify
       - build
-      - test
+      - describe
+      - bac-deploy
+#      - test
 
   libssh:
     executor: ubuntu
     steps:
       - checkout
       - install-libssh
+      - setvar
+      - gettags
+      - verify
       - configure-libssh
+      - verify
       - build
-      - test
+      - describe
+      - bac-deploy
+#      - test
 
   arm:
     machine:
@@ -318,9 +378,16 @@ jobs:
     resource_class: arm.medium
     steps:
       - checkout
+      - setvar
+      - setvar_arm
+      - gettags
+      - verify
       - configure
+      - verify
       - build
-      - test
+      - describe
+      - bac-deploy
+#      - test
 
   arm-cares:
     machine:
@@ -329,39 +396,46 @@ jobs:
     steps:
       - checkout
       - install-cares
+      - setvar
+      - setvar_arm
+      - gettags
+      - verify
       - configure-cares-debug
+      - verify
       - build
-      - test
+      - describe
+      - bac-deploy
+#      - test
 
 workflows:
 #  basic:
 #    jobs:
 #      - x86-openssl
 
-  openssl-no-verbose:
+#  openssl-no-verbose:
+#    jobs:
+#      - no-verbose
+
+#  wolfssl-wolfssh:
+#    jobs:
+#      - wolfssh
+
+  openssl-c-ares:
     jobs:
-      - no-verbose
+      - cares
 
-  wolfssl-wolfssh:
+  openssl-libssh:
     jobs:
-      - wolfssh
+      - libssh
 
-#  openssl-c-ares:
-#    jobs:
-#      - cares
+  openssl-no-proxy:
+    jobs:
+      - no-proxy
 
-#  openssl-libssh:
-#    jobs:
-#      - libssh
+  arm-openssl:
+    jobs:
+      - arm
 
-#  openssl-no-proxy:
-#    jobs:
-#      - no-proxy
-
-#  arm-openssl:
-#    jobs:
-#      - arm
-
-#  arm-openssl-c-ares:
-#    jobs:
-#      - arm-cares
+  arm-openssl-c-ares:
+    jobs:
+      - arm-cares
