@@ -38,19 +38,20 @@ environment:
 #         SHARED: ON
 #         DISABLED_TESTS: ""
 #         COMPILER_PATH: ""
-      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2022"
-        BUILD_SYSTEM: CMake
-        PRJ_GEN: "Visual Studio 17 2022"
-        TARGET: "-A x64"
-        PRJ_CFG: Release
-        OPENSSL: ON
-        SCHANNEL: OFF
-        ENABLE_UNICODE: OFF
-        HTTP_ONLY: OFF
-        TESTING: OFF
-        SHARED: ON
-        DISABLED_TESTS: ""
-        COMPILER_PATH: ""
+#       # x64, The C compiler identification is MSVC 19.31.31107.0
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2022"
+#         BUILD_SYSTEM: CMake
+#         PRJ_GEN: "Visual Studio 17 2022"
+#         TARGET: "-A x64"
+#         PRJ_CFG: Release
+#         OPENSSL: ON
+#         SCHANNEL: OFF
+#         ENABLE_UNICODE: OFF
+#         HTTP_ONLY: OFF
+#         TESTING: OFF
+#         SHARED: ON
+#         DISABLED_TESTS: ""
+#         COMPILER_PATH: ""
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2022"
 #         BUILD_SYSTEM: CMake
 #         PRJ_GEN: "Visual Studio 17 2022"
@@ -180,24 +181,24 @@ environment:
 #         PATHPART: debug
 #         TESTING: OFF
 #         ENABLE_UNICODE: no
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
-#         BUILD_SYSTEM: winbuild_vs2015
-#         DEBUG: no
-#         PATHPART: release
-#         TESTING: OFF
-#         ENABLE_UNICODE: no
+      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+        BUILD_SYSTEM: winbuild_vs2015
+        DEBUG: no
+        PATHPART: release
+        TESTING: OFF
+        ENABLE_UNICODE: no
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
 #         BUILD_SYSTEM: winbuild_vs2017
 #         DEBUG: yes
 #         PATHPART: debug
 #         TESTING: OFF
 #         ENABLE_UNICODE: no
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-#         BUILD_SYSTEM: winbuild_vs2017
-#         DEBUG: no
-#         PATHPART: release
-#         TESTING: OFF
-#         ENABLE_UNICODE: no
+      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+        BUILD_SYSTEM: winbuild_vs2017
+        DEBUG: no
+        PATHPART: release
+        TESTING: OFF
+        ENABLE_UNICODE: no
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
 #         BUILD_SYSTEM: winbuild_vs2015
 #         DEBUG: yes
