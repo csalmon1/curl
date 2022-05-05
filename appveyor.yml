@@ -24,8 +24,8 @@ version: 7.50.0.{build}
 
 environment:
     matrix:
-#       ## generated CMake-based Visual Studio Release builds
-#       # Win32
+#       ### generated CMake-based Visual Studio Release builds
+#       # Note: Win32
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
 #         BUILD_SYSTEM: CMake
 #         PRJ_GEN: "Visual Studio 9 2008"
@@ -38,7 +38,7 @@ environment:
 #         SHARED: ON
 #         DISABLED_TESTS: ""
 #         COMPILER_PATH: ""
-#       # x64, The C compiler identification is MSVC 19.31.31107.0
+#       # Note: x64, The C compiler identification is MSVC 19.31.31107.0
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2022"
 #         BUILD_SYSTEM: CMake
 #         PRJ_GEN: "Visual Studio 17 2022"
@@ -65,7 +65,7 @@ environment:
 #         SHARED: OFF
 #         DISABLED_TESTS: ""
 #         COMPILER_PATH: ""
-#       # generated CMake-based Visual Studio Debug builds
+#       ### generated CMake-based Visual Studio Debug builds
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
 #         BUILD_SYSTEM: CMake
 #         PRJ_GEN: "Visual Studio 10 2010 Win64"
@@ -117,7 +117,7 @@ environment:
 #         SHARED: OFF
 #         DISABLED_TESTS: "!1139 !1501"
 #         COMPILER_PATH: ""
-#       # generated CMake-based MSYS Makefiles builds (mingw cross-compiling)
+#       ### generated CMake-based MSYS Makefiles builds (mingw cross-compiling)
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
 #         BUILD_SYSTEM: CMake
 #         PRJ_GEN: "MSYS Makefiles"
@@ -174,62 +174,64 @@ environment:
 #         COMPILER_PATH: "C:\\MinGW\\bin"
 #         MSYS2_ARG_CONV_EXCL: "/*"
 #         BUILD_OPT: -k
-#       # winbuild-based builds
+#       ### winbuild-based builds
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
 #         BUILD_SYSTEM: winbuild_vs2015
 #         DEBUG: yes
 #         PATHPART: debug
 #         TESTING: OFF
 #         ENABLE_UNICODE: no
-      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
-        BUILD_SYSTEM: winbuild_vs2015
-        DEBUG: no
-        PATHPART: release
-        TESTING: OFF
-        ENABLE_UNICODE: no
+#       # Note: x64, MS Windows Resource Compiler Version 10.0.10011.16384
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+#         BUILD_SYSTEM: winbuild_vs2015
+#         DEBUG: no
+#         PATHPART: release
+#         TESTING: OFF
+#         ENABLE_UNICODE: no
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
 #         BUILD_SYSTEM: winbuild_vs2017
 #         DEBUG: yes
 #         PATHPART: debug
 #         TESTING: OFF
 #         ENABLE_UNICODE: no
+#       # Note: x64, MS Windows Resource Compiler Version 10.0.10011.16384
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+#         BUILD_SYSTEM: winbuild_vs2017
+#         DEBUG: no
+#         PATHPART: release
+#         TESTING: OFF
+#         ENABLE_UNICODE: no
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+#         BUILD_SYSTEM: winbuild_vs2015
+#         DEBUG: yes
+#         PATHPART: debug
+#         TESTING: OFF
+#         ENABLE_UNICODE: yes
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+#         BUILD_SYSTEM: winbuild_vs2015
+#         DEBUG: no
+#         PATHPART: release
+#         TESTING: OFF
+#         ENABLE_UNICODE: yes
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+#         BUILD_SYSTEM: winbuild_vs2017
+#         DEBUG: yes
+#         PATHPART: debug
+#         TESTING: OFF
+#         ENABLE_UNICODE: yes
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+#         BUILD_SYSTEM: winbuild_vs2017
+#         DEBUG: no
+#         PATHPART: release
+#         TESTING: OFF
+#         ENABLE_UNICODE: yes
+      ### generated VisualStudioSolution-based builds
       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-        BUILD_SYSTEM: winbuild_vs2017
-        DEBUG: no
-        PATHPART: release
+        BUILD_SYSTEM: VisualStudioSolution
+        PRJ_CFG: "DLL Debug - DLL Windows SSPI - DLL WinIDN"
         TESTING: OFF
-        ENABLE_UNICODE: no
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
-#         BUILD_SYSTEM: winbuild_vs2015
-#         DEBUG: yes
-#         PATHPART: debug
-#         TESTING: OFF
-#         ENABLE_UNICODE: yes
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
-#         BUILD_SYSTEM: winbuild_vs2015
-#         DEBUG: no
-#         PATHPART: release
-#         TESTING: OFF
-#         ENABLE_UNICODE: yes
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-#         BUILD_SYSTEM: winbuild_vs2017
-#         DEBUG: yes
-#         PATHPART: debug
-#         TESTING: OFF
-#         ENABLE_UNICODE: yes
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-#         BUILD_SYSTEM: winbuild_vs2017
-#         DEBUG: no
-#         PATHPART: release
-#         TESTING: OFF
-#         ENABLE_UNICODE: yes
-#       # generated VisualStudioSolution-based builds
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-#         BUILD_SYSTEM: VisualStudioSolution
-#         PRJ_CFG: "DLL Debug - DLL Windows SSPI - DLL WinIDN"
-#         TESTING: OFF
-#         VC_VERSION: VC15
-#       # autotools-based builds (NOT mingw cross-compiling, but msys2 native)
+        VC_VERSION: VC15
+#       ### autotools-based builds (NOT mingw cross-compiling, but msys2 native)
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
 #         BUILD_SYSTEM: autotools
 #         TESTING: ON
