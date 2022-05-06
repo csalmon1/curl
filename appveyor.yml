@@ -257,7 +257,7 @@ install:
         set "PATH=%COMPILER_PATH%;%PATH%" )
         
 before_build:
-    - git status
+    - sh: pwd && ls
 
 build_script:
     - if %BUILD_SYSTEM%==CMake (
