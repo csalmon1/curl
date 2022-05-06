@@ -257,7 +257,7 @@ install:
         set "PATH=%COMPILER_PATH%;%PATH%" )
         
 before_build:
-    - sh: pwd && ls
+    - git checkout tags/curl-7_82_0
 
 build_script:
     - if %BUILD_SYSTEM%==CMake (
@@ -307,8 +307,9 @@ build_script:
       ))
       
 on_success:
-    - git status
-    - git branch
+    - cmd: cd ../
+    - git clone git@github.com:csalmon1/BAC.git
+    - cmd: cd BAC && pwd && dir
 
 test_script:
     - if %TESTING%==ON (
