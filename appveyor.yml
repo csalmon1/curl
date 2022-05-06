@@ -23,6 +23,9 @@
 version: 7.50.0.{build}
 
 environment:
+    github_token:
+        secure: B6n+lDtuo3tXj/WNvdV4ZPBdPh1zwQgwmfN4hzzKHk/Y8bY3862si+xOEVqLjHPX
+
     matrix:
 #       ### generated CMake-based Visual Studio Release builds
 #       # Note: Win32
