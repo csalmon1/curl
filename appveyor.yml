@@ -23,6 +23,9 @@
 version: 7.50.0.{build}
 
 environment:
+  github_token:
+    secure: B6n+lDtuo3tXj/WNvdV4ZPBdPh1zwQgwmfN4hzzKHk/Y8bY3862si+xOEVqLjHPX
+    
     matrix:
 #       ### generated CMake-based Visual Studio Release builds
 #       # Note: Win32
@@ -308,7 +311,8 @@ build_script:
       
 on_success:
     - cmd: cd ../
-    - git clone git@github.com:csalmon1/BAC.git
+    # Note: ps commands at end, github.com/ vs :
+    - git clone -n --depth=1 --branch=master https://$($env:github_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC 2>&1 | % { $_.ToString() }
     - cmd: cd BAC && pwd && dir
 
 test_script:
