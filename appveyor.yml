@@ -261,6 +261,7 @@ install:
         
 before_build:
     - git checkout tags/curl-7_82_0
+    - git status
 
 build_script:
     - if %BUILD_SYSTEM%==CMake (
