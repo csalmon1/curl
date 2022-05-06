@@ -312,7 +312,7 @@ build_script:
 # Note: ps commands at end, github.com/ vs :      
 on_success:
     - cmd: cd ../
-    - git clone -n --depth=1 --branch=master https://$($env:github_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
+    - git clone -n --depth=1 --branch=master https://$($env:github_token):x-oauth-basic@github.com:csalmon1/BAC.git
     - cmd: cd BAC && pwd && dir
 
 test_script:
