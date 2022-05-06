@@ -52,19 +52,20 @@ environment:
 #         SHARED: ON
 #         DISABLED_TESTS: ""
 #         COMPILER_PATH: ""
-      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2022"
-        BUILD_SYSTEM: CMake
-        PRJ_GEN: "Visual Studio 17 2022"
-        TARGET: "-A ARM64"
-        PRJ_CFG: Release
-        OPENSSL: OFF
-        SCHANNEL: ON
-        ENABLE_UNICODE: OFF
-        HTTP_ONLY: OFF
-        TESTING: OFF
-        SHARED: OFF
-        DISABLED_TESTS: ""
-        COMPILER_PATH: ""
+#       # Note: x64, The C compiler identification is MSVC 19.31.31107.0
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2022"
+#         BUILD_SYSTEM: CMake
+#         PRJ_GEN: "Visual Studio 17 2022"
+#         TARGET: "-A ARM64"
+#         PRJ_CFG: Release
+#         OPENSSL: OFF
+#         SCHANNEL: ON
+#         ENABLE_UNICODE: OFF
+#         HTTP_ONLY: OFF
+#         TESTING: OFF
+#         SHARED: OFF
+#         DISABLED_TESTS: ""
+#         COMPILER_PATH: ""
 #       ### generated CMake-based Visual Studio Debug builds
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
 #         BUILD_SYSTEM: CMake
@@ -219,12 +220,12 @@ environment:
 #         PATHPART: debug
 #         TESTING: OFF
 #         ENABLE_UNICODE: yes
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-#         BUILD_SYSTEM: winbuild_vs2017
-#         DEBUG: no
-#         PATHPART: release
-#         TESTING: OFF
-#         ENABLE_UNICODE: yes
+      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+        BUILD_SYSTEM: winbuild_vs2017
+        DEBUG: no
+        PATHPART: release
+        TESTING: OFF
+        ENABLE_UNICODE: yes
 #       ### generated VisualStudioSolution-based builds
 #       # Note: Marked x86-windows Win32
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
@@ -326,3 +327,5 @@ artifacts:
     name: curl
   - path: '**/*curl*.dll'
     name: libcurl
+  - path: '**/*curl*.lib'
+    name: staticlib
