@@ -312,8 +312,9 @@ test_script:
 # select branches to avoid testing feature branches twice (as branch and as pull request)
 branches:
     only:
-        - master
-        - /\/ci$/
+        - appveyor
+#         - master
+#         - /\/ci$/
 
 artifacts:
   - path: '**/curl.exe'
