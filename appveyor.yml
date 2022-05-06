@@ -255,6 +255,9 @@ install:
     - set "PATH=C:\msys64\usr\bin;%PATH%"
     - if not "%COMPILER_PATH%"=="" (
         set "PATH=%COMPILER_PATH%;%PATH%" )
+        
+before_build:
+    - git status
 
 build_script:
     - if %BUILD_SYSTEM%==CMake (
@@ -292,7 +295,7 @@ build_script:
         call buildconf.bat &&
         cd winbuild &&
         call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat" &&
-        nmake /f Makefile.vc mode=static VC=15 "SSL_PATH=C:\OpenSSL-v111-Win64" WITH_SSL=dll MACHINE=x64 DEBUG=%DEBUG% ENABLE_UNICODE=%ENABLE_UNICODE% &&
+        nmake /f Makefile.vc mode=dll VC=15 "SSL_PATH=C:\OpenSSL-v111-Win64" WITH_SSL=dll MACHINE=x64 DEBUG=%DEBUG% ENABLE_UNICODE=%ENABLE_UNICODE% &&
         ..\builds\libcurl-vc15-x64-%PATHPART%-dll-ssl-dll-ipv6-sspi\bin\curl.exe -V
       ) else (
       if %BUILD_SYSTEM%==autotools (
@@ -302,6 +305,10 @@ build_script:
         if %BUILD_SYSTEM%==CMake (
           cmake --build . --config %PRJ_CFG% --parallel 2 --target testdeps
       ))
+      
+on_success:
+    - git status
+    - git branch
 
 test_script:
     - if %TESTING%==ON (
