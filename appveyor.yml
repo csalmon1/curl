@@ -312,17 +312,18 @@ build_script:
       
 # Note: ps commands at end, github.com/ vs :      
 on_success:
-    - git config --global credential.helper store
-    - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
+    - cmd: cd ../
     - git config --global user.email "csalmon@oceanit.com"
     - git config --global user.name "csalmon1"
-    - git clone https://github.com/csalmon1/BAC.git
-    
+    - git clone --branch=main https://oauth2:$($env:github_token)@github.com/csalmon1/BAC.git C:\projects\BAC
+    - cmd: cd BAC && pwd && dir
+
 #     - cmd: cd ../
+#     - git config --global credential.helper store
+#     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
 #     - git config --global user.email "csalmon@oceanit.com"
 #     - git config --global user.name "csalmon1"
-#     - git clone --branch=main https://$($env:github_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
-#     - cmd: cd BAC && pwd && dir
+#     - git clone https://github.com/csalmon1/BAC.git
 
 test_script:
     - if %TESTING%==ON (
