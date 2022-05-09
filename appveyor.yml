@@ -315,7 +315,7 @@ on_success:
     - cmd: cd ../
     - git config --global user.email "csalmon@oceanit.com"
     - git config --global user.name "csalmon1"
-    - git clone --branch=main https://oauth2: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@github.com/csalmon1/BAC.git C:\projects\BAC
+    - git clone --branch=main https://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:x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
     - cmd: cd BAC && pwd && dir
 
 #     - cmd: cd ../
