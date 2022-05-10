@@ -24,7 +24,7 @@ version: 7.50.0.{build}
 
 environment:
     github_token:
-        secure: B6n+lDtuo3tXj/WNvdV4ZPBdPh1zwQgwmfN4hzzKHk/Y8bY3862si+xOEVqLjHPX
+        secure: svD9dHltYqXJZJFxS8q9W86QjQ7TLAaKLqXOjAVzwJ+v1lQ8mz8fK3dI6Te6OOGF
 
     matrix:
 #       ### generated CMake-based Visual Studio Release builds
@@ -313,9 +313,7 @@ build_script:
 # Note: ps commands at end, github.com/ vs :      
 on_success:
     - cmd: cd ../
-    - git config --global user.email "csalmon@oceanit.com"
-    - git config --global user.name "csalmon1"
-    - git clone --branch=main https://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:x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
+    - git clone --branch=main https://$($env:github_token)@github.com/csalmon1/BAC.git C:\projects\BAC
     - cmd: cd BAC && pwd && dir
 
 #     - cmd: cd ../
