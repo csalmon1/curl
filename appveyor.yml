@@ -316,7 +316,7 @@ on_success:
     - git init
     - git config --global user.name "csalmon1"
     - git config --global user.email "csalmon@oceanit.com"
-    - git pull https://x-oauth-basic:$($env:github_token)@github.com/csalmon1/BAC.git C:\projects\BAC
+    - git pull https://x-oauth-basic:$($env:github_token)@github.com/csalmon1/BAC.git
     - cmd: pwd && dir
     
 #     - git clone https://x-oauth-basic:$($env:github_token)@github.com/csalmon1/BAC.git C:\projects\BAC
