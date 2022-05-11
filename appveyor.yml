@@ -318,10 +318,10 @@ on_success:
     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
     - git config --global user.name "csalmon1"
     - git config --global user.email "csalmon@oceanit.com"
-    - git pull origin main
+    - git pull https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git
     - cmd: pwd && dir
     
-#     - git clone https://x-oauth-basic:$($env:github_token)@github.com/csalmon1/BAC.git C:\projects\BAC
+#     - git clone https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
 #     - cmd: cd BAC && pwd && dir
 
 #     - cmd: cd ../
