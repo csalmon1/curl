@@ -313,7 +313,7 @@ build_script:
 on_success:
     - cmd: cd ../ && mkdir BAC && cd BAC
     - git init
-    - git remote set-url origin https://github.com/csalmon1/BAC.git
+    - git remote add origin https://github.com/csalmon1/BAC.git
     - git config --global credential.helper store
     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
     - git config --global user.name "csalmon1"
