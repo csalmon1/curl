@@ -23,7 +23,7 @@
 version: 7.50.0.{build}
 
 environment:
-    github_token:
+    access_token:
         secure: svD9dHltYqXJZJFxS8q9W86QjQ7TLAaKLqXOjAVzwJ+v1lQ8mz8fK3dI6Te6OOGF
 
     matrix:
@@ -309,14 +309,15 @@ build_script:
         if %BUILD_SYSTEM%==CMake (
           cmake --build . --config %PRJ_CFG% --parallel 2 --target testdeps
       ))
-      
-# Note: ps commands at end, github.com/ vs :      
+         
 on_success:
     - cmd: cd ../ && mkdir BAC && cd BAC
     - git init
+    - git config --global credential.helper store
+    - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
     - git config --global user.name "csalmon1"
     - git config --global user.email "csalmon@oceanit.com"
-    - git pull https://x-oauth-basic:$($env:github_token)@github.com/csalmon1/BAC.git
+    - git pull https://github.com/csalmon1/BAC.git
     - cmd: pwd && dir
     
 #     - git clone https://x-oauth-basic:$($env:github_token)@github.com/csalmon1/BAC.git C:\projects\BAC
@@ -324,7 +325,7 @@ on_success:
 
 #     - cmd: cd ../
 #     - git config --global credential.helper store
-#     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:github_token):x-oauth-basic@github.com`n" -NoNewline
+#     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
 #     - git config --global user.email "csalmon@oceanit.com"
 #     - git config --global user.name "csalmon1"
 #     - git clone https://github.com/csalmon1/BAC.git
