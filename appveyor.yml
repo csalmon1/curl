@@ -320,7 +320,7 @@ on_success:
     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
     - git config --global user.name "csalmon1"
     - git config --global user.email "csalmon@oceanit.com"
-    - git fetch https://github.com/csalmon1/BAC.git main
+    - git fetch https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git main
     - cmd: pwd && dir
     
 #     - git clone https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
