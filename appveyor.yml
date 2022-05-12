@@ -311,7 +311,7 @@ build_script:
       ))
          
 on_success:
-    - cmd: cd ../../
+    - cmd: cd ../../ && pwd
     - git clone https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
     - cmd: cd BAC && pwd && dir
     
