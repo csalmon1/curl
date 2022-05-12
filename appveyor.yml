@@ -311,12 +311,14 @@ build_script:
       ))
          
 on_success:
-    - cmd: cd ../ && mkdir BAC && cd BAC
+    - cmd: cd ../../ && mkdir BAC && cd BAC
     - git init
     - git remote add origin https://github.com/csalmon1/BAC.git
+    - git config --global credential.helper store
+    - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
     - git config --global user.name "csalmon1"
     - git config --global user.email "csalmon@oceanit.com"
-    - git pull https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git
+    - git pull https://github.com/csalmon1/BAC.git
     - cmd: pwd && dir
     
 #     - git clone https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
