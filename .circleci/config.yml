@@ -408,17 +408,17 @@ jobs:
 #      - test
 
 workflows:
-#  basic:
-#    jobs:
-#      - x86-openssl
+  basic:
+    jobs:
+      - x86-openssl
 
-#  openssl-no-verbose:
-#    jobs:
-#      - no-verbose
+  openssl-no-verbose:
+    jobs:
+      - no-verbose
 
-#  wolfssl-wolfssh:
-#    jobs:
-#      - wolfssh
+  wolfssl-wolfssh:
+    jobs:
+      - wolfssh
 
   openssl-c-ares:
     jobs:
