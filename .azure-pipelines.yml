@@ -59,7 +59,7 @@ stages:
       container_cmd: ''
       configure: ''
       tests: ''
-      git_tag: 'curl-7_79_1'
+      git_tag: 'curl-7_64_1'
       build_config: ''
       plat: 'x86_64'
       os_desc: 'windows'
