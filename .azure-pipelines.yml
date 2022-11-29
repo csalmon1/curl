@@ -71,7 +71,7 @@ stages:
       vmImage: 'windows-2019'
     strategy:
       matrix:
-        # config 1
+        # config 1 - O1
         msys2_mingw64_debug_openssl:
           name: 64-bit OpenSSL/libssh2
           container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
