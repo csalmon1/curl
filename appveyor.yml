@@ -260,7 +260,7 @@ install:
         set "PATH=%COMPILER_PATH%;%PATH%" )
         
 before_build:
-    - git checkout tags/curl-7_82_0
+    - git checkout tags/curl-7_81_0
     - git status
 
 build_script:
@@ -311,19 +311,20 @@ build_script:
       ))
          
 on_success:
-    - cmd: cd ../../ && pwd && mkdir BAC && cd BAC
-    - git init .
-    - git status
-    - git remote add origin https://github.com/csalmon1/BAC.git
-    - git remote -v
-    - git config --global credential.helper store
-    - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
-    - git config --global user.name "csalmon1"
-    - git config --global user.email "csalmon@oceanit.com"
-    - git fetch https://github.com/csalmon1/BAC.git
-    - git remote show origin
-    - git checkout -b main origin/main
-    - cmd: pwd && dir
+    - cmd: cd ../../ && pwd && dir
+#     - cmd: cd ../../ && pwd && mkdir BAC && cd BAC
+#     - git init .
+#     - git status
+#     - git remote add origin https://github.com/csalmon1/BAC.git
+#     - git remote -v
+#     - git config --global credential.helper store
+#     - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
+#     - git config --global user.name "csalmon1"
+#     - git config --global user.email "csalmon@oceanit.com"
+#     - git fetch https://github.com/csalmon1/BAC.git
+#     - git remote show origin
+#     - git checkout -b main origin/main
+#     - cmd: pwd && dir
     
 #     - git clone https://$($env:access_token):x-oauth-basic@github.com/csalmon1/BAC.git C:\projects\BAC
     
@@ -370,9 +371,11 @@ branches:
 #         - /\/ci$/
 
 artifacts:
-  - path: '**/curl.exe'
-    name: curl
-  - path: '**/*curl*.dll'
-    name: libcurl
-  - path: '**/*curl*.lib'
-    name: staticlib
+  - path: '..builds/*'
+    name: curlBundle
+#  - path: '**/curl.exe'
+#    name: curl
+#  - path: '**/*curl*.dll'
+#    name: libcurl
+#  - path: '**/*curl*.lib'
+#    name: staticlib
