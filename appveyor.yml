@@ -371,7 +371,7 @@ branches:
 #         - /\/ci$/
 
 artifacts:
-  - path: '..builds/*'
+  - path: '**/builds/*'
     name: curlBundle
 #  - path: '**/curl.exe'
 #    name: curl
