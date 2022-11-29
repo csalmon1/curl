@@ -91,25 +91,25 @@ stages:
         #   tests: "~571"
         #   build_config: win64_debug_static_openssl_libssh2_mingw64
         #   sw_ed: --disable-shared --with-libssh2 --with-openssl
-        # config 2
-        msys2_mingw64_debug_libssh:
-          name: 64-bit OpenSSL/libssh
-          container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
-          container_cmd: C:\msys64\usr\bin\sh
-          prepare: pacman -S --needed --noconfirm --noprogressbar libssh-devel mingw-w64-x86_64-libssh
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --with-libssh --with-openssl
-          tests: "~571 ~614"
-          build_config: win64_debug_openssl_libssh_mingw64
-          sw_ed: --with-libssh --with-openssl
-        ## config 3
-        # msys1_mingw64_debug:
-        #   name: 64-bit w/o zlib
-        #   container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
-        #   container_cmd: C:\MinGW\msys\1.0\bin\sh
-        #   configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --enable-werror --without-zlib --without-ssl
-        #   tests: "!203 !1143"
-        #   build_config: win64_debug_nozlib_nossl_mingw64
-        #   sw_ed: --without-zlib --without-ssl
+        # # config 2
+        # msys2_mingw64_debug_libssh:
+        #   name: 64-bit OpenSSL/libssh
+        #   container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys2-mingw64:ltsc2019
+        #   container_cmd: C:\msys64\usr\bin\sh
+        #   prepare: pacman -S --needed --noconfirm --noprogressbar libssh-devel mingw-w64-x86_64-libssh
+        #   configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --with-libssh --with-openssl
+        #   tests: "~571 ~614"
+        #   build_config: win64_debug_openssl_libssh_mingw64
+        #   sw_ed: --with-libssh --with-openssl
+        # config 3
+        msys1_mingw64_debug:
+          name: 64-bit w/o zlib
+          container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
+          container_cmd: C:\MinGW\msys\1.0\bin\sh
+          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --without-zlib --without-ssl
+          tests: "!203 !1143"
+          build_config: win64_debug_nozlib_nossl_mingw64
+          sw_ed: --without-zlib --without-ssl
         ## config 4
         # msys2_mingw64_debug_schannel:
         #   name: 64-bit Schannel/SSPI/WinIDN/libssh2
