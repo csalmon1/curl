@@ -120,15 +120,23 @@ stages:
         #   tests: "~571"
         #   build_config: win64_debug_sspi_schannel_winidn_libssh2_mingw64
         #   sw_ed: --enable-sspi --with-schannel --with-winidn --with-libssh2
-        # config 5
-        msys1_mingw64_debug_schannel:
-          name: 64-bit Schannel/SSPI/WinIDN w/o zlib
+        # # config 5
+        # msys1_mingw64_debug_schannel:
+        #   name: 64-bit Schannel/SSPI/WinIDN w/o zlib
+        #   container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
+        #   container_cmd: C:\MinGW\msys\1.0\bin\sh
+        #   configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --enable-sspi --with-schannel --with-winidn --without-zlib
+        #   tests: "!203 !1143"
+        #   build_config: win64_debug_sspi_schannel_winidn_nozlib_mingw64
+        #   sw_ed: --enable-sspi --with-schannel --with-winidn --without-zlib
+        # config 6 - o0
+        msys1_mingw64_debug_O0:
+          name: 64-bit w/o zlib
           container_img: ghcr.io/mback2k/curl-docker-winbuildenv/msys1-mingw64:ltsc2019
           container_cmd: C:\MinGW\msys\1.0\bin\sh
-          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --enable-debug --enable-sspi --with-schannel --with-winidn --without-zlib
-          tests: "!203 !1143"
-          build_config: win64_debug_sspi_schannel_winidn_nozlib_mingw64
-          sw_ed: --enable-sspi --with-schannel --with-winidn --without-zlib
+          configure: --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --without-zlib --without-ssl CFLAGS="O0"
+          build_config: win64_debug_nozlib_nossl_mingw64
+          sw_ed: --without-zlib --without-ssl
     container:
       image: $(container_img)
       env:
