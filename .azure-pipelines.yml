@@ -64,7 +64,7 @@ stages:
       plat: 'x86_64'
       os_desc: 'windows'
       sw_ed: ''
-      comp_arg: '--enable-debug --disable-Werror`'
+      comp_arg: '--enable-debug -Wno-error`'
       comp: 'x86_64-w64-mingw32-gcc'
     timeoutInMinutes: 120
     pool:
