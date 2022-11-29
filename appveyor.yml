@@ -260,7 +260,7 @@ install:
         set "PATH=%COMPILER_PATH%;%PATH%" )
         
 before_build:
-    - git checkout tags/curl-7_81_0
+    - git checkout tags/curl-7_64_1
     - git status
 
 build_script:
