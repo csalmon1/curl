@@ -211,19 +211,22 @@ environment:
 #         PATHPART: debug
 #         TESTING: OFF
 #         ENABLE_UNICODE: yes
-#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
-#         BUILD_SYSTEM: winbuild_vs2015
-#         DEBUG: no
-#         PATHPART: release
-#         TESTING: OFF
-#         ENABLE_UNICODE: yes
-        # Config 2 for curl-7_64_1 builds
-      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
-        BUILD_SYSTEM: winbuild_vs2017
-        DEBUG: yes
-        PATHPART: debug
+        # Note: x64, MS Windows Resource Compiler Version 10.0.10011.16384
+        # Config 3 for curl-7_64_1 builds
+      - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+        BUILD_SYSTEM: winbuild_vs2015
+        DEBUG: no
+        PATHPART: release
         TESTING: OFF
         ENABLE_UNICODE: yes
+#         # Note: x64, MS Windows Resource Compiler Version 10.0.10011.16384
+#         # Config 2 for curl-7_64_1 builds
+#       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+#         BUILD_SYSTEM: winbuild_vs2017
+#         DEBUG: yes
+#         PATHPART: debug
+#         TESTING: OFF
+#         ENABLE_UNICODE: yes
 #       # Note: x64, MS Windows Resource Compiler Version 10.0.10011.16384
 #       # Config 1 for curl-7_64_1 builds
 #       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
